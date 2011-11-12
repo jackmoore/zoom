@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset='utf-8'/>
+	<title>jQuery Zoom Demo</title>
+	<style>
+		* { border:0; margin:0; padding:0; }
+
+		.zoomIcon { 
+			width:33px; 
+			height:33px; 
+			position:absolute; 
+			top:0;
+			right:0;
+			background:url(icon.png);
+		}
+
+		.zoom {
+			display:inline-block;
+		}
+
+		.zoom img {
+			display: block;
+		}
+	</style>
+	<script src='http://ajax.googleapis.com/ajax/libs/jquery/1.7.0/jquery.min.js'></script>
+	<script src='jquery.zoom.js'></script>
+	<script>
+		$(document).ready(function(){
+			$('span').zoom();
+		});
+	</script>
+</head>
+<body>
+	<span class='zoom'>
+		<img src='daisy.jpg' width='555' height='320' alt='Daisy on the Ohoopee'/>
+	</span>
+	<span class='zoom'>
+		<img src='roxy.jpg' width='290' height='320' alt='Roxy on the Ohoopee'/>
+	</span>
+</body>
+</html>
