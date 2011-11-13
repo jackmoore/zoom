@@ -6,7 +6,7 @@
     var defaults = {
         url: false,
         icon: true,
-        duration: 200
+        duration: 120
     };
 
     $.fn.zoom = function (options) {

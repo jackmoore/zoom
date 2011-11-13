@@ -1,9 +1,8 @@
-## Zoom
+## About Zoom
 
-A small jQuery plugin for zooming images on mouseover.
+A small jQuery plugin for zooming images on mouseover. See the [project page](http://jacklmoore.com/zoom/) for documentation and a demonstration.  Released under the [MIT license](http://www.opensource.org/licenses/mit-license.php).
+ 
+## Changelog:
 
-### Online Demo:
-http://jacklmoore.com/zoom/
-
-### License: 
-http://www.opensource.org/licenses/mit-license.php
+### Version 1.0 - Nov. 11 2011
+* First release
