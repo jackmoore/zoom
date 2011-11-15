@@ -1,4 +1,4 @@
-// Zoom 1.0 - jQuery image zooming plugin
+// Zoom 1.2 - jQuery image zooming plugin
 // (c) 2011 Jack Moore - jacklmoore.com
 // license: www.opensource.org/licenses/mit-license.php
 
@@ -45,7 +45,8 @@
                 xRatio,
                 yRatio,
                 left,
-                top;
+                top,
+                offset = $root.offset();
 
                 function ratio() {
                     outerWidth = $root.outerWidth();
@@ -121,6 +122,8 @@
                 } else {
                     $img.hover(
                         function () {
+                            offset = $root.offset();
+
                             ratio();
 
                             // Skip the fade-in for IE8 and lower since it chokes on fading-in
@@ -135,8 +138,8 @@
                             .fadeTo(settings.duration, 0);
                         }
                     )[mousemove](function (e) {
-                        img.style.left = (e.pageX - root.offsetLeft) * -xRatio + 'px';
-                        img.style.top = (e.pageY - root.offsetTop) * -yRatio + 'px';
+                        img.style.left = (e.pageX - offset.left) * -xRatio + 'px';
+                        img.style.top = (e.pageY - offset.top) * -yRatio + 'px';
                     });                
                 }
             };
