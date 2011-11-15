@@ -6,6 +6,7 @@
     var defaults = {
         url: false,
         icon: true,
+        grab: false,
         duration: 120
     };
 
@@ -18,7 +19,8 @@
             $img = $(img),
             $icon,
             position = $root.css('position'),
-            settings = $.extend({}, defaults, options || {});
+            settings = $.extend({}, defaults, options || {}),
+            mousemove = 'mousemove';
 
             $root.css({
                 position: /(absolute|fixed)/.test(position) ? position : 'relative',
@@ -41,13 +43,37 @@
                 outerWidth,
                 outerHeight,
                 xRatio,
-                yRatio;
+                yRatio,
+                left,
+                top;
 
                 function ratio() {
                     outerWidth = $root.outerWidth();
                     outerHeight = $root.outerHeight();
-                    xRatio = -(img.width - outerWidth) / outerWidth;
-                    yRatio = -(img.height - outerHeight) / outerHeight;
+                    xRatio = (img.width - outerWidth) / outerWidth;
+                    yRatio = (img.height - outerHeight) / outerHeight;
+                }
+
+                function move(e) {
+                    left = (e.pageX - root.offsetLeft);
+                    top = (e.pageY - root.offsetTop);
+
+                    if (left > outerWidth) {
+                        left = outerWidth;
+                    } else if (left < 0) {
+                        left = 0;
+                    }
+
+                    if (top > outerHeight) {
+                        top = outerHeight;
+                    } else if (top < 0) {
+                        top = 0;
+                    }
+
+                    img.style.left = (left * -xRatio) + 'px';
+                    img.style.top = (top * -yRatio) + 'px';
+
+                    e.preventDefault();
                 }
 
                 ratio();
@@ -63,24 +89,56 @@
                     height: img.height,
                     border: 'none'
                 })
-                .hover(
-                    function () {
-                        ratio();
-
-                        // Skip the fade-in for IE8 and lower since it chokes on fading-in
-                        // and changing position based on mousemovement at the same time.
-                        $img.stop().fadeTo($.support.opacity ? settings.duration : 0, 1);
-
-                    }, 
-                    function () {
-                        $img.stop().fadeTo(settings.duration, 0);
-                    }
-                )
-                .mousemove(function (e) {
-                    img.style.left = (e.pageX - root.offsetLeft) * xRatio + 'px';
-                    img.style.top = (e.pageY - root.offsetTop) * yRatio + 'px';
-                })
                 .appendTo($root);
+
+                if (settings.grab) {
+                    $img.mousedown(
+                        function (e) {
+
+                            $(document).one('mouseup',
+                                function () {
+                                    $img
+                                    .stop()
+                                    .fadeTo(settings.duration, 0);
+
+                                    $(document).unbind(mousemove, move);
+                                }
+                            );
+
+                            ratio();
+
+                            move(e);
+
+                            $img
+                            .stop()
+                            .fadeTo($.support.opacity ? settings.duration : 0, 1);
+
+                            $(document)[mousemove](move);
+                            
+                            e.preventDefault();
+                        }
+                    );
+                } else {
+                    $img.hover(
+                        function () {
+                            ratio();
+
+                            // Skip the fade-in for IE8 and lower since it chokes on fading-in
+                            // and changing position based on mousemovement at the same time.
+                            $img
+                            .stop()
+                            .fadeTo($.support.opacity ? settings.duration : 0, 1);
+                        },
+                        function () {
+                            $img
+                            .stop()
+                            .fadeTo(settings.duration, 0);
+                        }
+                    )[mousemove](function (e) {
+                        img.style.left = (e.pageX - root.offsetLeft) * -xRatio + 'px';
+                        img.style.top = (e.pageY - root.offsetTop) * -yRatio + 'px';
+                    });                
+                }
             };
 
             img.src = settings.url;

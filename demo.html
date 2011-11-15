@@ -22,20 +22,24 @@
 		.zoom img {
 			display: block;
 		}
+
+		#ex2 img:hover { cursor: url(grab.cur), default; }
+		#ex2 img:active { cursor: url(grabbed.cur), default; }
 	</style>
 	<script src='http://ajax.googleapis.com/ajax/libs/jquery/1.7.0/jquery.min.js'></script>
 	<script src='jquery.zoom.js'></script>
 	<script>
 		$(document).ready(function(){
-			$('span').zoom();
+			$('#ex1').zoom();
+			$('#ex2').zoom({ grab: true });
 		});
 	</script>
 </head>
 <body>
-	<span class='zoom'>
+	<span class='zoom' id='ex1'>
 		<img src='daisy.jpg' width='555' height='320' alt='Daisy on the Ohoopee'/>
 	</span>
-	<span class='zoom'>
+	<span class='zoom' id='ex2'>
 		<img src='roxy.jpg' width='290' height='320' alt='Roxy on the Ohoopee'/>
 	</span>
 </body>
