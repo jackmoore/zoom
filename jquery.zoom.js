@@ -7,12 +7,13 @@
         url: false,
         icon: true,
         grab: false,
-        duration: 120
+        duration: 120,
+        click: false
     };
 
     $.fn.zoom = function (options) {
         return this.each(function () {
-            var 
+            var
             root = this,
             $root = $(root),
             img = new Image(),
@@ -115,7 +116,7 @@
                             .fadeTo($.support.opacity ? settings.duration : 0, 1);
 
                             $(document)[mousemove](move);
-                            
+
                             e.preventDefault();
                         }
                     );
@@ -140,7 +141,12 @@
                     )[mousemove](function (e) {
                         img.style.left = (e.pageX - offset.left) * -xRatio + 'px';
                         img.style.top = (e.pageY - offset.top) * -yRatio + 'px';
-                    });                
+                    });
+
+                    // allow click events to be attached
+                    if (settings.click) {
+                        $img.click(settings.click);
+                    }
                 }
             };
 
