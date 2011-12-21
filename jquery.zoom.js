@@ -1,4 +1,4 @@
-// Zoom 1.2 - jQuery image zooming plugin
+// Zoom 1.3 - jQuery image zooming plugin
 // (c) 2011 Jack Moore - jacklmoore.com
 // license: www.opensource.org/licenses/mit-license.php
 
@@ -7,6 +7,7 @@
         url: false,
         icon: true,
         grab: false,
+        callback: false,
         duration: 120
     };
 
@@ -142,6 +143,11 @@
                         img.style.top = (e.pageY - offset.top) * -yRatio + 'px';
                     });                
                 }
+        
+                if ($.isFunction(settings.callback)) {
+                    settings.callback.call(img);
+                }    
+
             };
 
             img.src = settings.url;
