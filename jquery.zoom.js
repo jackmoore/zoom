@@ -4,12 +4,12 @@
 
 (function ($) {
     var defaults = {
-        url: false,
-        icon: true,
-        grab: false,
-        callback: false,
-        duration: 120
-    };
+    		on: 'mouseover',
+        	url: false,
+        	icon: true,
+        	callback: false,
+        	duration: 120
+    	};
 
     $.fn.zoom = function (options) {
         return this.each(function () {
@@ -57,8 +57,8 @@
                 }
 
                 function move(e) {
-                    left = (e.pageX - offset.left);
-                    top = (e.pageY - offset.top);
+                    left = (e.pageX - root.offsetLeft);
+                    top = (e.pageY - root.offsetTop);
 
                     if (left > outerWidth) {
                         left = outerWidth;
@@ -93,10 +93,9 @@
                 })
                 .appendTo($root);
 
-                if (settings.grab) {
+                if (settings.on == 'grab') {
                     $img.mousedown(
                         function (e) {
-                            offset = $root.offset();
 
                             $(document).one('mouseup',
                                 function () {
@@ -121,6 +120,35 @@
                             e.preventDefault();
                         }
                     );
+                } else if (settings.on == 'click') {
+                	var active = false;
+                	$img.click(
+                		function(){
+                			if (active == false)
+                			{
+	                            offset = $root.offset();
+	
+	                            ratio();
+	
+	                            // Skip the fade-in for IE8 and lower since it chokes on fading-in
+	                            // and changing position based on mousemovement at the same time.
+	                            $img
+	                            .stop()
+	                            .fadeTo($.support.opacity ? settings.duration : 0, 1);
+		                    }
+		                    else
+		                    {
+	                            $img
+	                            .stop()
+	                            .fadeTo(settings.duration, 0);
+		                    }
+		                    
+		                    active = !active;
+                		}
+                	)[mousemove](function (e) {
+                	    img.style.left = (e.pageX - offset.left) * -xRatio + 'px';
+                	    img.style.top = (e.pageY - offset.top) * -yRatio + 'px';
+                	});
                 } else {
                     $img.hover(
                         function () {
