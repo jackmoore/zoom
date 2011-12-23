@@ -57,8 +57,8 @@
                 }
 
                 function move(e) {
-                    left = (e.pageX - root.offsetLeft);
-                    top = (e.pageY - root.offsetTop);
+                    left = (e.pageX - offset.left);
+                    top = (e.pageY - offset.top);
 
                     if (left > outerWidth) {
                         left = outerWidth;
@@ -96,6 +96,7 @@
                 if (settings.grab) {
                     $img.mousedown(
                         function (e) {
+                            offset = $root.offset();
 
                             $(document).one('mouseup',
                                 function () {
