@@ -8,7 +8,8 @@
         	url: false,
         	icon: true,
         	callback: false,
-        	duration: 120
+        	duration: 120,
+        	maxZoom: 0
     	};
 
     $.fn.zoom = function (options) {
@@ -40,18 +41,33 @@
             }
 
             img.onload = function () {
-                var
-                outerWidth,
-                outerHeight,
-                xRatio,
-                yRatio,
-                left,
-                top,
-                offset = $root.offset();
+                var outerWidth,
+	                outerHeight,
+	                xRatio,
+	                yRatio,
+	                left,
+	                top,
+	                offset = $root.offset();
+                
+            	function mouse_is_moving(e)
+            	{
+            	    img.style.left = (e.pageX - offset.left) * -xRatio + 'px';
+            	    img.style.top = (e.pageY - offset.top) * -yRatio + 'px';
+            	}
 
                 function ratio() {
                     outerWidth = $root.outerWidth();
                     outerHeight = $root.outerHeight();
+                    
+                    if (settings.maxZoom > 0)
+                    {
+                    	$(img)
+                    		.css({
+                    			width: 	Math.min(img.width, outerWidth*settings.maxZoom),
+                    			height: Math.min(img.height, outerHeight*settings.maxZoom)
+                    		});
+                    }
+                    
                     xRatio = (img.width - outerWidth) / outerWidth;
                     yRatio = (img.height - outerHeight) / outerHeight;
                 }
@@ -133,22 +149,21 @@
 	                            // Skip the fade-in for IE8 and lower since it chokes on fading-in
 	                            // and changing position based on mousemovement at the same time.
 	                            $img
-	                            .stop()
-	                            .fadeTo($.support.opacity ? settings.duration : 0, 1);
+	                            	.stop()
+	                            	.fadeTo($.support.opacity ? settings.duration : 0, 1)
+	                            	.mousemove(mouse_is_moving);
 		                    }
 		                    else
 		                    {
 	                            $img
-	                            .stop()
-	                            .fadeTo(settings.duration, 0);
+	                            	.stop()
+	                            	.fadeTo(settings.duration, 0)
+	                            	.unbind('mousemove', mouse_is_moving);
 		                    }
 		                    
 		                    active = !active;
                 		}
-                	)[mousemove](function (e) {
-                	    img.style.left = (e.pageX - offset.left) * -xRatio + 'px';
-                	    img.style.top = (e.pageY - offset.top) * -yRatio + 'px';
-                	});
+                	);
                 } else {
                     $img.hover(
                         function () {
@@ -167,10 +182,7 @@
                             .stop()
                             .fadeTo(settings.duration, 0);
                         }
-                    )[mousemove](function (e) {
-                        img.style.left = (e.pageX - offset.left) * -xRatio + 'px';
-                        img.style.top = (e.pageY - offset.top) * -yRatio + 'px';
-                    });                
+                    )[mousemove](mouse_is_moving);                
                 }
         
                 if ($.isFunction(settings.callback)) {
