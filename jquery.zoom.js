@@ -1,4 +1,4 @@
-// Zoom 1.3 - jQuery image zooming plugin
+// Zoom 1.3.1 - jQuery image zooming plugin
 // (c) 2011 Jack Moore - jacklmoore.com
 // license: www.opensource.org/licenses/mit-license.php
 
@@ -46,8 +46,7 @@
                 xRatio,
                 yRatio,
                 left,
-                top,
-                offset = $root.offset();
+                top;
 
                 function ratio() {
                     outerWidth = $root.outerWidth();
@@ -57,8 +56,8 @@
                 }
 
                 function move(e) {
-                    left = (e.pageX - offset.left);
-                    top = (e.pageY - offset.top);
+                    left = (e.pageX - root.offsetLeft);
+                    top = (e.pageY - root.offsetTop);
 
                     if (left > outerWidth) {
                         left = outerWidth;
@@ -96,7 +95,6 @@
                 if (settings.grab) {
                     $img.mousedown(
                         function (e) {
-                            offset = $root.offset();
 
                             $(document).one('mouseup',
                                 function () {
@@ -124,7 +122,6 @@
                 } else {
                     $img.hover(
                         function () {
-                            offset = $root.offset();
 
                             ratio();
 
@@ -140,8 +137,8 @@
                             .fadeTo(settings.duration, 0);
                         }
                     )[mousemove](function (e) {
-                        img.style.left = (e.pageX - offset.left) * -xRatio + 'px';
-                        img.style.top = (e.pageY - offset.top) * -yRatio + 'px';
+                        img.style.left = (e.pageX - root.offsetLeft) * -xRatio + 'px';
+                        img.style.top = (e.pageY - root.offsetTop) * -yRatio + 'px';
                     });                
                 }
         
