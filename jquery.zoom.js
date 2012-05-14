@@ -13,7 +13,7 @@
 
     $.fn.zoom = function (options) {
         return this.each(function () {
-            var 
+            var
             root = this,
             $root = $(root),
             img = new Image(),
@@ -21,7 +21,8 @@
             $icon,
             position = $root.css('position'),
             settings = $.extend({}, defaults, options || {}),
-            mousemove = 'mousemove';
+            mousemove = 'mousemove',
+            root_offset = $root.offset();
 
             $root.css({
                 position: /(absolute|fixed)/.test(position) ? position : 'relative',
@@ -115,7 +116,7 @@
                             .fadeTo($.support.opacity ? settings.duration : 0, 1);
 
                             $(document)[mousemove](move);
-                            
+
                             e.preventDefault();
                         }
                     );
@@ -137,14 +138,14 @@
                             .fadeTo(settings.duration, 0);
                         }
                     )[mousemove](function (e) {
-                        img.style.left = (e.pageX - root.offsetLeft) * -xRatio + 'px';
-                        img.style.top = (e.pageY - root.offsetTop) * -yRatio + 'px';
-                    });                
+                        img.style.left = (e.pageX - root_offset.left) * -xRatio + 'px';
+                        img.style.top = (e.pageY - root_offset.top) * -yRatio + 'px';
+                    });
                 }
-        
+
                 if ($.isFunction(settings.callback)) {
                     settings.callback.call(img);
-                }    
+                }
 
             };
 
