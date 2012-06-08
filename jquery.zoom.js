@@ -4,12 +4,13 @@
 
 (function ($) {
     var defaults = {
-        url: false,
-        icon: true,
-        grab: false,
-        callback: false,
-        duration: 120
-    };
+    		on: 'mouseover',
+        	url: false,
+        	icon: true,
+        	callback: false,
+        	duration: 120,
+        	maxZoom: 0
+    	};
 
     $.fn.zoom = function (options) {
         return this.each(function () {
@@ -40,25 +41,40 @@
             }
 
             img.onload = function () {
-                var
-                outerWidth,
-                outerHeight,
-                xRatio,
-                yRatio,
-                left,
-                top,
-                offset = $root.offset();
+                var outerWidth,
+	                outerHeight,
+	                xRatio,
+	                yRatio,
+	                left,
+	                top,
+	                offset = $root.offset();
+                
+            	function mouse_is_moving(e)
+            	{
+            	    img.style.left = (e.pageX - offset.left) * -xRatio + 'px';
+            	    img.style.top = (e.pageY - offset.top) * -yRatio + 'px';
+            	}
 
                 function ratio() {
                     outerWidth = $root.outerWidth();
                     outerHeight = $root.outerHeight();
+                    
+                    if (settings.maxZoom > 0)
+                    {
+                    	$(img)
+                    		.css({
+                    			width: 	Math.min(img.width, outerWidth*settings.maxZoom),
+                    			height: Math.min(img.height, outerHeight*settings.maxZoom)
+                    		});
+                    }
+                    
                     xRatio = (img.width - outerWidth) / outerWidth;
                     yRatio = (img.height - outerHeight) / outerHeight;
                 }
 
                 function move(e) {
-                    left = (e.pageX - offset.left);
-                    top = (e.pageY - offset.top);
+                    left = (e.pageX - root.offsetLeft);
+                    top = (e.pageY - root.offsetTop);
 
                     if (left > outerWidth) {
                         left = outerWidth;
@@ -93,10 +109,9 @@
                 })
                 .appendTo($root);
 
-                if (settings.grab) {
+                if (settings.on == 'grab') {
                     $img.mousedown(
                         function (e) {
-                            offset = $root.offset();
 
                             $(document).one('mouseup',
                                 function () {
@@ -121,6 +136,34 @@
                             e.preventDefault();
                         }
                     );
+                } else if (settings.on == 'click') {
+                	var active = false;
+                	$img.click(
+                		function(){
+                			if (active == false)
+                			{
+	                            offset = $root.offset();
+	
+	                            ratio();
+	
+	                            // Skip the fade-in for IE8 and lower since it chokes on fading-in
+	                            // and changing position based on mousemovement at the same time.
+	                            $img
+	                            	.stop()
+	                            	.fadeTo($.support.opacity ? settings.duration : 0, 1)
+	                            	.mousemove(mouse_is_moving);
+		                    }
+		                    else
+		                    {
+	                            $img
+	                            	.stop()
+	                            	.fadeTo(settings.duration, 0)
+	                            	.unbind('mousemove', mouse_is_moving);
+		                    }
+		                    
+		                    active = !active;
+                		}
+                	);
                 } else {
                     $img.hover(
                         function () {
@@ -139,10 +182,7 @@
                             .stop()
                             .fadeTo(settings.duration, 0);
                         }
-                    )[mousemove](function (e) {
-                        img.style.left = (e.pageX - offset.left) * -xRatio + 'px';
-                        img.style.top = (e.pageY - offset.top) * -yRatio + 'px';
-                    });                
+                    )[mousemove](mouse_is_moving);                
                 }
         
                 if ($.isFunction(settings.callback)) {
