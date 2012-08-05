@@ -84,10 +84,12 @@
                 .addClass('zoomImg')
                 .css({
                     position: 'absolute',
+                    'z-index': 9999,
                     top: 0,
                     left: 0,
                     opacity: 0,
                     width: img.width,
+                    'max-width': img.width,
                     height: img.height,
                     border: 'none'
                 })
