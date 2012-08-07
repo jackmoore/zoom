@@ -156,4 +156,4 @@
     };
 
     $.fn.zoom.defaults = defaults;
-}(jQuery));
+})(jQuery);
