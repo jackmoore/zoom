@@ -1,5 +1,5 @@
 // Zoom 1.3 - jQuery image zooming plugin
-// (c) 2011 Jack Moore - jacklmoore.com
+// (c) 2012 Jack Moore - jacklmoore.com
 // license: www.opensource.org/licenses/mit-license.php
 
 (function ($) {
@@ -13,7 +13,7 @@
 
     $.fn.zoom = function (options) {
         return this.each(function () {
-            var 
+            var
             root = this,
             $root = $(root),
             img = new Image(),
@@ -89,7 +89,8 @@
                     opacity: 0,
                     width: img.width,
                     height: img.height,
-                    border: 'none'
+                    border: 'none',
+                    maxWidth: 'none'
                 })
                 .appendTo($root);
 
@@ -142,12 +143,12 @@
                     )[mousemove](function (e) {
                         img.style.left = (e.pageX - offset.left) * -xRatio + 'px';
                         img.style.top = (e.pageY - offset.top) * -yRatio + 'px';
-                    });                
+                    });
                 }
         
                 if ($.isFunction(settings.callback)) {
                     settings.callback.call(img);
-                }    
+                }
 
             };
 
