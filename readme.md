@@ -4,6 +4,9 @@ A small jQuery plugin for zooming images on mouseover or mousedown. See the [pro
  
 ## Changelog:
 
+### Version 1.4 - Sept. 29 2012
+* Changed API & added option to activate on click.
+
 ### Version 1.3 - Dec. 21 2011
 * Added 'callback' property that will execute a callback function once the image has loaded.
 * Fixed a bug relating to the 'grab' property
