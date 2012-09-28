@@ -7,7 +7,7 @@
 		/* styles unrelated to zoom */
 		* { border:0; margin:0; padding:0; }
 		p { position:absolute; top:3px; right:28px; color:#555; font:bold 13px/1 sans-serif;}
-
+		
 		/* optional icon style */
 		.zoomIcon { 
 			width:33px; 
@@ -33,23 +33,28 @@
 		#ex2 img:hover { cursor: url(grab.cur), default; }
 		#ex2 img:active { cursor: url(grabbed.cur), default; }
 	</style>
-	<script src='http://ajax.googleapis.com/ajax/libs/jquery/1.8.0/jquery.min.js'></script>
+	<script src='http://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js'></script>
 	<script src='jquery.zoom.js'></script>
 	<script>
 		$(document).ready(function(){
 			$('#ex1').zoom();
-			$('#ex2').zoom({ grab: true });
+			$('#ex2').zoom({ on:'grab' });
+			$('#ex3').zoom({ on:'click' });
 		});
 	</script>
 </head>
 <body>
 	<span class='zoom' id='ex1'>
+		<img src='daisy.jpg' id='jack' width='555' height='320' alt='Daisy on the Ohoopee'/>
 		<p>Hover</p>
-		<img src='daisy.jpg' width='555' height='320' alt='Daisy on the Ohoopee'/>
 	</span>
 	<span class='zoom' id='ex2'>
-		<p>Grab</p>
 		<img src='roxy.jpg' width='290' height='320' alt='Roxy on the Ohoopee'/>
+		<p>Grab</p>
+	</span>
+	<span class='zoom' id='ex3'>
+		<img src='daisy.jpg' width='555' height='320' alt='Daisy on the Ohoopee'/>
+		<p>Click</p>
 	</span>
 </body>
 </html>
