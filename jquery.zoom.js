@@ -13,50 +13,54 @@
 
 	$.fn.zoom = function (options) {
 		return this.each(function () {
-			var
-			root = this,
-			$root = $(root),
+			var 
+			//target will display the zoomed iamge
+			target = options.target || this,
+			$target = $(target),
+			//source will provide zoom location info (thumbnail)
+			source = this,
+			$source = $(source),
 			img = new Image(),
 			$img = $(img),
 			$icon,
-			position = $root.css('position'),
+			position = $target.css('position'),
 			settings = $.extend({}, defaults, options || {}),
 			mousemove = 'mousemove',
 			clicked = false;
 
 			// The parent element needs positioning so that the zoomed element can be correctly positioned within.
-			$root.css({
+			$target.css({
 				position: /(absolute|fixed)/.test(position) ? position : 'relative',
 				overflow: 'hidden'
 			});
 
 			// If a url wasn't specified, look for an image element.
 			if (!settings.url) {
-				settings.url = $root.find('img').attr('src');
+				settings.url = $source.find('img').attr('src');
 				if (!settings.url) {
 					return;
 				}
 			}
 
 			if (settings.icon) {
-				$icon = $('<div class="zoomIcon"/>').appendTo($root);
+				$icon = $('<div class="zoomIcon"/>').appendTo($source);
 			}
 
 			img.onload = function () {
-				var
+				var 
 				outerWidth,
 				outerHeight,
 				xRatio,
 				yRatio,
 				left,
 				top,
-				offset = $root.offset();
+				offset = $source.offset();
 
 				function ratio() {
-					outerWidth = $root.outerWidth();
-					outerHeight = $root.outerHeight();
-					xRatio = (img.width - outerWidth) / outerWidth;
-					yRatio = (img.height - outerHeight) / outerHeight;
+					outerWidth = $target.outerWidth();
+					outerHeight = $target.outerHeight();
+					xRatio = (img.width - outerWidth) / $source.outerWidth();
+					yRatio = (img.height - outerHeight) / $source.outerHeight();
 				}
 
 				function move(e) {
@@ -82,7 +86,7 @@
 				}
 
 				function start(e) {
-					offset = $root.offset();
+					offset = $source.offset();
 					ratio();
 					move(e);
 
@@ -109,12 +113,12 @@
 					border: 'none',
 					maxWidth: 'none'
 				})
-				.appendTo($root);
+				.appendTo($target);
 
 				if (settings.on === 'grab') {
-					$img.mousedown(
+					$source.mousedown(
 						function (e) {
-							offset = $root.offset();
+							offset = $source.offset();
 
 							$(document).one('mouseup',
 								function () {
@@ -127,13 +131,13 @@
 							start(e);
 
 							$(document)[mousemove](move);
-							
+
 							e.preventDefault();
 						}
 					);
 				} else if (settings.on === 'click') {
-					$img.click(
-						function(e){
+					$source.click(
+						function (e) {
 							if (clicked) {
 								// bubble the event up to the document to trigger the unbind.
 								return;
@@ -159,12 +163,12 @@
 				} else {
 					ratio(); // Pre-emptively call ratio because IE7 will fire the mousemove callback before the hover callback.
 
-					$img.hover(
+					$source.hover(
 						start,
 						stop
 					)[mousemove](move);
 				}
-		
+
 				if ($.isFunction(settings.callback)) {
 					settings.callback.call(img);
 				}
@@ -176,4 +180,4 @@
 	};
 
 	$.fn.zoom.defaults = defaults;
-}(jQuery));
+} (jQuery));
