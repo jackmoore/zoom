@@ -7,15 +7,17 @@
 		url: false,
 		icon: true,
 		callback: false,
+		target: false,
 		duration: 120,
 		on: 'mouseover' // other options: 'grab' or 'click'
 	};
 
 	$.fn.zoom = function (options) {
 		return this.each(function () {
-			var 
+			var
+			settings = $.extend({}, defaults, options || {}),
 			//target will display the zoomed iamge
-			target = options.target || this,
+			target = settings.target || this,
 			$target = $(target),
 			//source will provide zoom location info (thumbnail)
 			source = this,
@@ -24,7 +26,6 @@
 			$img = $(img),
 			$icon,
 			position = $target.css('position'),
-			settings = $.extend({}, defaults, options || {}),
 			mousemove = 'mousemove',
 			clicked = false;
 
@@ -47,7 +48,7 @@
 			}
 
 			img.onload = function () {
-				var 
+				var
 				outerWidth,
 				outerHeight,
 				xRatio,
@@ -180,4 +181,4 @@
 	};
 
 	$.fn.zoom.defaults = defaults;
-} (jQuery));
+}(window.jQuery));
