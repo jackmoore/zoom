@@ -80,8 +80,8 @@
 						top = 0;
 					}
 
-					img.style.left = (left * -xRatio) + 'px';
-					img.style.top = (top * -yRatio) + 'px';
+					$img.css('left', (left * -xRatio) + 'px');
+					$img.css('top', (top * -yRatio) + 'px');
 
 					e.preventDefault();
 				}
