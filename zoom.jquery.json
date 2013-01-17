@@ -1,0 +1,24 @@
+{
+	"name": "zoom",
+	"title": "Zoom",
+	"description": "Enlarge images on click on mouseover",
+	"keywords": [
+		"zoom",
+		"images",
+		"ui"
+	],
+	"version": "1.4.0",
+	"author": {
+		"name": "Jack Moore",
+		"url": "http://www.jacklmoore.com"
+	},
+	"licenses": [
+		{
+			"type": "MIT",
+			"url": "http://www.opensource.org/licenses/mit-license.php"
+		}
+	],
+	"homepage": "http://jacklmoore.com/zoom",
+	"demo": "http://jacklmoore.com/zoom",
+	"dependencies": { "jquery": ">=1.4" }
+}
