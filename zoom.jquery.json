@@ -7,10 +7,10 @@
 		"images",
 		"ui"
 	],
-	"version": "1.6.0",
+	"version": "1.6.1",
 	"author": {
 		"name": "Jack Moore",
-		"url": "http://www.jacklmoore.com"
+		"url": "http://www.jacklmoore.com",
 		"email": "jack@colorpowered.com"
 	},
 	"licenses": [
@@ -21,5 +21,7 @@
 	],
 	"homepage": "http://jacklmoore.com/zoom",
 	"demo": "http://jacklmoore.com/zoom",
-	"dependencies": { "jquery": ">=1.4" }
+	"dependencies": {
+		"jquery": ">=1.4"
+	}
 }

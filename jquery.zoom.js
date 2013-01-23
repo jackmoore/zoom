@@ -1,7 +1,9 @@
-// Zoom 1.6.0 - jQuery image zooming plugin
-// (c) 2013 Jack Moore - jacklmoore.com
-// license: www.opensource.org/licenses/mit-license.php
-
+/*
+	jQuery Zoom v1.6.1
+	(c) 2013 Jack Moore - jacklmoore.com/zoom
+	updated: 2013-01-23
+	license: http://www.opensource.org/licenses/mit-license.php
+*/
 (function ($) {
 	var defaults = {
 		url: false,
