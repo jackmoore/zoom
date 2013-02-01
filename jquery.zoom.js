@@ -1,17 +1,15 @@
 /*
-	jQuery Zoom v1.6.1
+	jQuery Zoom v1.7.0 - 2013-01-31
 	(c) 2013 Jack Moore - jacklmoore.com/zoom
-	updated: 2013-01-23
 	license: http://www.opensource.org/licenses/mit-license.php
 */
 (function ($) {
 	var defaults = {
 		url: false,
-		icon: true,
 		callback: false,
 		target: false,
 		duration: 120,
-		on: 'mouseover' // other options: 'grab' or 'click'
+		on: 'mouseover' // other options: 'grab', 'click', 'toggle'
 	};
 
 	// Core Zoom Logic, independent of event listeners.
@@ -85,10 +83,6 @@
 				}
 			}
 
-			if (settings.icon) {
-				$('<div class="zoomIcon"/>').appendTo($(source));
-			}
-
 			img.onload = function () {
 				var zoom = $.zoom(target, source, img);
 
@@ -133,11 +127,8 @@
 								return;
 							} else {
 								clicked = true;
-
 								start(e);
-
 								$(document)[mousemove](zoom.move);
-
 								$(document).one('click',
 									function () {
 										stop();
@@ -145,9 +136,19 @@
 										$(document).unbind(mousemove, zoom.move);
 									}
 								);
-
 								return false;
 							}
+						}
+					);
+				} else if (settings.on === 'toggle') {
+					$(source).click(
+						function (e) {
+							if (clicked) {
+								stop();
+							} else {
+								start(e);
+							}
+							clicked = !clicked;
 						}
 					);
 				} else {
