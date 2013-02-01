@@ -114,13 +114,13 @@
 								function () {
 									stop();
 
-									$(document).unbind(mousemove, zoom.move);
+									$(document).off(mousemove, zoom.move);
 								}
 							);
 
 							start(e);
 
-							$(document)[mousemove](zoom.move);
+              $(document)[mousemove](zoom.move);
 
 							e.preventDefault();
 						}
@@ -136,13 +136,35 @@
 
 								start(e);
 
-								$(document)[mousemove](zoom.move);
+                $(document)[mousemove](zoom.move);
 
 								$(document).one('click',
 									function () {
 										stop();
 										clicked = false;
-										$(document).unbind(mousemove, zoom.move);
+										$(document).off(mousemove, zoom.move);
+									}
+								);
+
+								return false;
+							}
+						}
+					);
+				} else if (settings.on === 'toggle') {
+					$(source).click(
+						function (e) {
+							if (clicked) {
+								// bubble the event up to the document to trigger the unbind.
+								return;
+							} else {
+								clicked = true;
+
+								start(e);
+
+								$(source).one('click',
+									function () {
+										stop();
+										clicked = false;
 									}
 								);
 
