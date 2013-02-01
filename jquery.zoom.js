@@ -120,7 +120,7 @@
 
 							start(e);
 
-              $(document).on(mousemove, zoom.move);
+              $(document)[mousemove](zoom.move);
 
 							e.preventDefault();
 						}
@@ -136,7 +136,7 @@
 
 								start(e);
 
-                $(document).on(mousemove, zoom.move);
+                $(document)[mousemove](zoom.move);
 
 								$(document).one('click',
 									function () {
