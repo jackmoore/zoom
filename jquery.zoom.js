@@ -65,13 +65,13 @@
     };
 
     function Zoom( options ) {
-        var settings = $.extend( {}, defaults, options || {} ),
-            $target  = $( settings.target || this ), //target will display the zoomed iamge
-            $source  = $( this ), //source will provide zoom location info (thumbnail)
+        var clicked  = false,
             img      = new Image(),
-            $img     = $( img ),
-            clicked  = false,
-            doc      = $( document ), zoom;
+            doc      = $( document ),
+            settings = $.extend( {}, defaults, options || {} ),
+            $target  = $( settings.target || this ), //target will display the zoomed image
+            $source  = $( this ), //source will provide zoom location info (thumbnail)
+            $img     = $( img ), zoom;
 
         if ( checkUrl() ) {
             img.onload = onLoadImg;
@@ -103,18 +103,14 @@
         }
 
         function grabHandler( e ) {
-            $(document).one('mouseup',
-                function () {
-                    stop();
+            doc.one( 'mouseup', function() {
+                stop();
+                doc.off( 'mousemove' );
+            });
 
-                    $(document).unbind('mousemove', zoom.move);
-                }
-            );
-
-            start(e);
-            $(document)['mousemove'](zoom.move);
+            start( e );
+            doc.mousemove( zoom.move );
             e.preventDefault();
-            return false;
         }
 
         function clickHandler( e ) {
@@ -125,13 +121,11 @@
                 clicked = true;
                 start( e );
                 doc.mousemove( zoom.move );
-                doc.one( 'click',
-                    function() {
-                        stop();
-                        clicked = false;
-                        doc.off( 'mousemove' );
-                    }
-                );
+                doc.one( 'click', function() {
+                    stop();
+                    clicked = false;
+                    doc.off( 'mousemove' );
+                });
                 return false;
             }
         }
@@ -187,4 +181,4 @@
 
     $.fn[ wN ].defaults = defaults;
 
-})( window.jQuery );
+})( jQuery, window );
