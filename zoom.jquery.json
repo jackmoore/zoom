@@ -22,6 +22,6 @@
 	"homepage": "http://jacklmoore.com/zoom",
 	"demo": "http://jacklmoore.com/zoom",
 	"dependencies": {
-		"jquery": ">=1.4"
+		"jquery": ">=1.7"
 	}
 }

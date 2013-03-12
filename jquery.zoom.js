@@ -102,25 +102,25 @@
 				}
 
 				if (settings.on === 'grab') {
-					$(source).mousedown(
+					$(source).on('mousedown',
 						function (e) {
 							$(document).one('mouseup',
 								function () {
 									stop();
 
-									$(document).unbind(mousemove, zoom.move);
+									$(document).off(mousemove, zoom.move);
 								}
 							);
 
 							start(e);
 
-							$(document)[mousemove](zoom.move);
+							$(document).on(mousemove, zoom.move);
 
 							e.preventDefault();
 						}
 					);
 				} else if (settings.on === 'click') {
-					$(source).click(
+					$(source).on('click',
 						function (e) {
 							if (clicked) {
 								// bubble the event up to the document to trigger the unbind.
@@ -128,12 +128,12 @@
 							} else {
 								clicked = true;
 								start(e);
-								$(document)[mousemove](zoom.move);
+								$(document).on(mousemove, zoom.move);
 								$(document).one('click',
 									function () {
 										stop();
 										clicked = false;
-										$(document).unbind(mousemove, zoom.move);
+										$(document).off(mousemove, zoom.move);
 									}
 								);
 								return false;
@@ -141,7 +141,7 @@
 						}
 					);
 				} else if (settings.on === 'toggle') {
-					$(source).click(
+					$(source).on('click',
 						function (e) {
 							if (clicked) {
 								stop();
@@ -154,10 +154,10 @@
 				} else {
 					zoom.init(); // Pre-emptively call init because IE7 will fire the mousemove handler before the hover handler.
 
-					$(source).hover(
-						start,
-						stop
-					)[mousemove](zoom.move);
+					$(source)
+						.on('mouseenter', start)
+						.on('mouseleave', stop)
+						.on(mousemove, zoom.move);
 				}
 
 				if ($.isFunction(settings.callback)) {
