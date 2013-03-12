@@ -108,7 +108,7 @@
 								function () {
 									stop();
 
-									$(document).unbind(mousemove, zoom.move);
+									$(document).off(mousemove, zoom.move);
 								}
 							);
 
@@ -133,7 +133,7 @@
 									function () {
 										stop();
 										clicked = false;
-										$(document).unbind(mousemove, zoom.move);
+										$(document).off(mousemove, zoom.move);
 									}
 								);
 								return false;
