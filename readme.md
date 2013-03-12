@@ -4,6 +4,9 @@ A small jQuery plugin for zooming images on mouseover or mousedown. See the [pro
  
 ## Changelog:
 
+### v1.7.1 - 2013/3/12
+* Removed jQuery shorthand methods in favor of on() in anticipation of jQuery 2.0
+
 ### v1.7.0 - 2013/1/31
 * Added 'toggle' behavior to zoom in/out on click.  Example: $('#example').zoom({ on:'toggle' });
 * Removed the icon property in favor of just using CSS.

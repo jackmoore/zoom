@@ -1,5 +1,5 @@
 /*
-	jQuery Zoom v1.7.0 - 2013-01-31
+	jQuery Zoom v1.7.1 - 2013-03-12
 	(c) 2013 Jack Moore - jacklmoore.com/zoom
 	license: http://www.opensource.org/licenses/mit-license.php
 */
