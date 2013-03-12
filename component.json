@@ -3,6 +3,6 @@
 	"version": "1.7.0",
 	"main": "./jquery.zoom.js",
 	"dependencies": {
-		"jquery": ">=1.4"
+		"jquery": ">=1.7"
 	}
 }
