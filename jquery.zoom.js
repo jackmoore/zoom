@@ -77,7 +77,12 @@
 
 			// If a url wasn't specified, look for an image element.
 			if (!settings.url) {
-				settings.url = $(source).find('img').attr('src');
+
+				if($(source).data('zoom')) {
+					settings.url = $(source).data('zoom');
+				} else {
+					settings.url = $(source).find('img').attr('src');
+				}
 				if (!settings.url) {
 					return;
 				}
@@ -90,6 +95,8 @@
 					zoom.init();
 					zoom.move(e);
 
+					$(target).addClass('zoomed');
+
 					// Skip the fade-in for IE8 and lower since it chokes on fading-in
 					// and changing position based on mousemovement at the same time.
 					$img.stop()
@@ -99,12 +106,13 @@
 				function stop() {
 					$img.stop()
 					.fadeTo(settings.duration, 0);
+					$(target).removeClass('zoomed');
 				}
 
 				if (settings.on === 'grab') {
-					$(source).on('mousedown',
+					$(source).on('mousedown' + '.zoom',
 						function (e) {
-							$(document).one('mouseup',
+							$(document).one('mouseup' + '.zoom',
 								function () {
 									stop();
 
@@ -114,13 +122,13 @@
 
 							start(e);
 
-							$(document).on(mousemove, zoom.move);
+							$(document).on(mousemove + '.zoom', zoom.move);
 
 							e.preventDefault();
 						}
 					);
 				} else if (settings.on === 'click') {
-					$(source).on('click',
+					$(source).on('click' + '.zoom',
 						function (e) {
 							if (clicked) {
 								// bubble the event up to the document to trigger the unbind.
@@ -128,12 +136,12 @@
 							} else {
 								clicked = true;
 								start(e);
-								$(document).on(mousemove, zoom.move);
-								$(document).one('click',
+								$(document).on(mousemove + '.zoom', zoom.move);
+								$(document).one('click' + '.zoom',
 									function () {
 										stop();
 										clicked = false;
-										$(document).off(mousemove, zoom.move);
+										$(document).off(mousemove + '.zoom', zoom.move);
 									}
 								);
 								return false;
@@ -141,7 +149,7 @@
 						}
 					);
 				} else if (settings.on === 'toggle') {
-					$(source).on('click',
+					$(source).on('click' + '.zoom',
 						function (e) {
 							if (clicked) {
 								stop();
@@ -155,9 +163,9 @@
 					zoom.init(); // Pre-emptively call init because IE7 will fire the mousemove handler before the hover handler.
 
 					$(source)
-						.on('mouseenter', start)
-						.on('mouseleave', stop)
-						.on(mousemove, zoom.move);
+						.on('mouseenter' + '.zoom', start)
+						.on('mouseleave' + '.zoom', stop)
+						.on(mousemove + '.zoom', zoom.move);
 				}
 
 				if ($.isFunction(settings.callback)) {
