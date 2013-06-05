@@ -84,6 +84,7 @@
 			}
 
 			img.onload = function () {
+				$img.css({width:"auto",height:"auto"});
 				var zoom = $.zoom(target, source, img);
 
 				function start(e) {
