@@ -4,6 +4,9 @@ A small jQuery plugin for zooming images on mouseover or mousedown. See the [pro
  
 ## Changelog:
 
+### v1.7.2 - 2013/6/6
+* Replaced new Image() with document.createElement('img') to avoid a potential bug in Chrome 27.
+
 ### v1.7.1 - 2013/3/12
 * Replaced jQuery shorthand methods with on() in anticipation of jQuery 2.0
 

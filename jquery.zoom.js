@@ -1,5 +1,5 @@
 /*
-	jQuery Zoom v1.7.1 - 2013-03-12
+	jQuery Zoom v1.7.2 - 2013-06-06
 	(c) 2013 Jack Moore - jacklmoore.com/zoom
 	license: http://www.opensource.org/licenses/mit-license.php
 */
@@ -26,6 +26,8 @@
 			position: /(absolute|fixed)/.test() ? position : 'relative',
 			overflow: 'hidden'
 		});
+
+		img.style.width = img.style.height = '';
 
 		$(img)
 			.addClass('zoomImg')
@@ -70,8 +72,8 @@
 			target = settings.target || this,
 			//source will provide zoom location info (thumbnail)
 			source = this,
-			img = new Image(),
-			$img = $(img),
+			$img = $('img'),
+			img = $img[0],
 			mousemove = 'mousemove',
 			clicked = false;
 
@@ -84,7 +86,6 @@
 			}
 
 			img.onload = function () {
-				$img.css({width:"auto",height:"auto"});
 				var zoom = $.zoom(target, source, img);
 
 				function start(e) {
