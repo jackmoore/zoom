@@ -1,5 +1,5 @@
 /*
-	jQuery Zoom v1.7.2 - 2013-06-06
+	jQuery Zoom v1.7.2 - 2013-06-11
 	(c) 2013 Jack Moore - jacklmoore.com/zoom
 	license: http://www.opensource.org/licenses/mit-license.php
 */
@@ -68,12 +68,12 @@
 		return this.each(function () {
 			var
 			settings = $.extend({}, defaults, options || {}),
-			//target will display the zoomed iamge
+			//target will display the zoomed image
 			target = settings.target || this,
 			//source will provide zoom location info (thumbnail)
 			source = this,
-			$img = $('img'),
-			img = $img[0],
+			img = document.createElement('img'),
+			$img = $(img),
 			mousemove = 'mousemove',
 			clicked = false;
 
@@ -154,7 +154,7 @@
 						}
 					);
 				} else {
-					zoom.init(); // Pre-emptively call init because IE7 will fire the mousemove handler before the hover handler.
+					zoom.init(); // Preemptively call init because IE7 will fire the mousemove handler before the hover handler.
 
 					$(source)
 						.on('mouseenter', start)
