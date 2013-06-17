@@ -74,7 +74,7 @@
 			source = this,
 			img = document.createElement('img'),
 			$img = $(img),
-			mousemove = 'mousemove',
+			mousemove = 'mousemove.zoom',
 			clicked = false;
 
 			// If a url wasn't specified, look for an image element.
@@ -104,9 +104,9 @@
 				}
 
 				if (settings.on === 'grab') {
-					$(source).on('mousedown',
+					$(source).on('mousedown.zoom',
 						function (e) {
-							$(document).one('mouseup',
+							$(document).one('mouseup.zoom',
 								function () {
 									stop();
 
@@ -122,7 +122,7 @@
 						}
 					);
 				} else if (settings.on === 'click') {
-					$(source).on('click',
+					$(source).on('click.zoom',
 						function (e) {
 							if (clicked) {
 								// bubble the event up to the document to trigger the unbind.
@@ -131,7 +131,7 @@
 								clicked = true;
 								start(e);
 								$(document).on(mousemove, zoom.move);
-								$(document).one('click',
+								$(document).one('click.zoom',
 									function () {
 										stop();
 										clicked = false;
@@ -143,7 +143,7 @@
 						}
 					);
 				} else if (settings.on === 'toggle') {
-					$(source).on('click',
+					$(source).on('click.zoom',
 						function (e) {
 							if (clicked) {
 								stop();
@@ -157,8 +157,8 @@
 					zoom.init(); // Preemptively call init because IE7 will fire the mousemove handler before the hover handler.
 
 					$(source)
-						.on('mouseenter', start)
-						.on('mouseleave', stop)
+						.on('mouseenter.zoom', start)
+						.on('mouseleave.zoom', stop)
 						.on(mousemove, zoom.move);
 				}
 
