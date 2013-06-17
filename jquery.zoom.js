@@ -101,11 +101,13 @@
 
 					// Skip the fade-in for IE8 and lower since it chokes on fading-in
 					// and changing position based on mousemovement at the same time.
+					$(source).trigger("zoomedIn");
 					$img.stop()
 					.fadeTo($.support.opacity ? settings.duration : 0, 1);
 				}
 
 				function stop() {
+					$(source).trigger("zoomedOut");
 					$img.stop()
 					.fadeTo(settings.duration, 0);
 				}
