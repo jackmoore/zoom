@@ -77,6 +77,13 @@
 			mousemove = 'mousemove.zoom',
 			clicked = false;
 
+			if (options == "destroy") {
+				stop();
+				// Remove all of the namespaced events.
+				$(source).off(".zoom");
+				return;
+			}
+
 			// If a url wasn't specified, look for an image element.
 			if (!settings.url) {
 				settings.url = $(source).find('img').attr('src');
