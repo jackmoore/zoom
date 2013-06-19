@@ -1,6 +1,6 @@
 {
 	"name": "jquery-zoom",
-	"version": "1.7.4",
+	"version": "1.7.5",
 	"main": "./jquery.zoom.js",
 	"dependencies": {
 		"jquery": ">=1.4"

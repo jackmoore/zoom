@@ -4,6 +4,10 @@ A small jQuery plugin for zooming images on mouseover or mousedown. See the [pro
  
 ## Changelog:
 
+### v1.7.5 - 2013/6/19
+* Fixed a bug with absolutely or fixed position target elements
+* Set the value of `this` to be zoom-image element for the onZoomIn and onZoomOut callbacks
+
 ### v1.7.4 - 2013/6/18
 * Namespaced events to assist unbinding events.
 * Added destroy event to unbind zoom events & remove created img element. Example:

@@ -1,5 +1,5 @@
 /*
-	jQuery Zoom v1.7.4 - 2013-06-18
+	jQuery Zoom v1.7.5 - 2013-06-19
 	(c) 2013 Jack Moore - jacklmoore.com/zoom
 	license: http://www.opensource.org/licenses/mit-license.php
 */
@@ -97,12 +97,12 @@
 					// Skip the fade-in for IE8 and lower since it chokes on fading-in
 					// and changing position based on mousemovement at the same time.
 					$img.stop()
-					.fadeTo($.support.opacity ? settings.duration : 0, 1, settings.onZoomIn);
+					.fadeTo($.support.opacity ? settings.duration : 0, 1, $.isFunction(settings.onZoomIn) ? settings.onZoomIn.call(img) : false);
 				}
 
 				function stop() {
 					$img.stop()
-					.fadeTo(settings.duration, 0, settings.onZoomOut);
+					.fadeTo(settings.duration, 0, $.isFunction(settings.onZoomIn) ? settings.onZoomIn.call(img) : false);
 				}
 
 				if (settings.on === 'grab') {
@@ -173,7 +173,7 @@
 
 			$(source).one('zoom.destroy', function(){
 				$(source).off(".zoom");
-				$(img).remove();
+				$img.remove();
 			});
 		});
 	};
