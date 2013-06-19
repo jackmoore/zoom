@@ -25,7 +25,7 @@
 
 		// The parent element needs positioning so that the zoomed element can be correctly positioned within.
 		$(target).css({
-			position: /(absolute|fixed)/.test() ? position : 'relative',
+			position: /(absolute|fixed)/.test(position) ? position : 'relative',
 			overflow: 'hidden'
 		});
 
