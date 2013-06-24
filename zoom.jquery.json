@@ -2,7 +2,7 @@
 	"name": "zoom",
 	"title": "Zoom",
 	"description": "Enlarge images on click or mouseover.",
-	"version": "1.7.5",
+	"version": "1.7.6",
 	"dependencies": {
 		"jquery": ">=1.7"
 	},

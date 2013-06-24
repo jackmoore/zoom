@@ -1,5 +1,5 @@
 /*!
-	Zoom v1.7.5 - 2013-06-23
+	Zoom v1.7.6 - 2013-06-24
 	Enlarge images on click or mouseover.
 	(c) 2013 Jack Moore - http://www.jacklmoore.com/zoom
 	license: http://www.opensource.org/licenses/mit-license.php
@@ -103,7 +103,7 @@
 
 				function stop() {
 					$img.stop()
-					.fadeTo(settings.duration, 0, $.isFunction(settings.onZoomIn) ? settings.onZoomIn.call(img) : false);
+					.fadeTo(settings.duration, 0, $.isFunction(settings.onZoomOut) ? settings.onZoomOut.call(img) : false);
 				}
 
 				if (settings.on === 'grab') {
