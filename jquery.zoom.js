@@ -103,7 +103,7 @@
 
 				function stop() {
 					$img.stop()
-					.fadeTo(settings.duration, 0, $.isFunction(settings.onZoomIn) ? settings.onZoomIn.call(img) : false);
+					.fadeTo(settings.duration, 0, $.isFunction(settings.onZoomOut) ? settings.onZoomOut.call(img) : false);
 				}
 
 				if (settings.on === 'grab') {
