@@ -1,6 +1,7 @@
-/*
-	jQuery Zoom v1.7.5 - 2013-06-19
-	(c) 2013 Jack Moore - jacklmoore.com/zoom
+/*!
+	Zoom v1.7.5 - 2013-06-23
+	Enlarge images on click or mouseover.
+	(c) 2013 Jack Moore - http://www.jacklmoore.com/zoom
 	license: http://www.opensource.org/licenses/mit-license.php
 */
 (function ($) {

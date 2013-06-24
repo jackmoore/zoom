@@ -1,6 +1,5 @@
 {
-	"name": "zoom",
-	"title": "Zoom",
+	"name": "jquery-zoom",
 	"description": "Enlarge images on click or mouseover.",
 	"version": "1.7.5",
 	"dependencies": {
@@ -12,11 +11,13 @@
 		"ui",
 		"jQuery"
 	],
-	"author": {
-		"name": "Jack Moore",
-		"url": "http://www.jacklmoore.com",
-		"email": "hello@jacklmoore.com"
-	},
+	"authors": [
+		{
+			"name": "Jack Moore",
+			"url": "http://www.jacklmoore.com",
+			"email": "hello@jacklmoore.com"
+		}
+	],
 	"licenses": [
 		{
 			"type": "MIT",
@@ -24,5 +25,5 @@
 		}
 	],
 	"homepage": "http://www.jacklmoore.com/zoom",
-	"demo": "http://www.jacklmoore.com/zoom"
+	"main": "jquery.zoom.js"
 }
