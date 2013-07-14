@@ -4,6 +4,9 @@ A small jQuery plugin for zooming images on mouseover or mousedown. See the [pro
  
 ## Changelog:
 
+### v1.7.7 - 2013/7/14
+* Restricted grab to just the left-mouse-button on mousedown
+
 ### v1.7.6 - 2013/6/24
 * Fixed misnamed onZoomOut callback
 
