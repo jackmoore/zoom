@@ -82,7 +82,7 @@
 
 			// If a url wasn't specified, look for an image element.
 			if (!settings.url) {
-				settings.url = $(source).find('img').attr('src');
+				settings.url = $(source).find('img').data('src') ? $(source).find('img').data('src') : $(source).find('img').attr('src');
 				if (!settings.url) {
 					return;
 				}
