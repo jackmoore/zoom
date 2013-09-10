@@ -111,25 +111,36 @@
 				}
 
 				if (settings.on === 'grab') {
-					$(source).on('mousedown.zoom',
-						function (e) {
-							if (e.which === 1) {
-								$(document).one('mouseup.zoom',
-									function () {
-										stop();
+					$(source)
+						.on('mousedown.zoom',
+							function (e) {
+								if (e.which === 1) {
+									$(document).one('mouseup.zoom',
+										function () {
+											stop();
 
-										$(document).off(mousemove, zoom.move);
-									}
-								);
+											$(document).off(mousemove, zoom.move);
+										}
+									);
 
-								start(e);
+									start(e);
 
-								$(document).on(mousemove, zoom.move);
+									$(document).on(mousemove, zoom.move);
 
-								e.preventDefault();
+									e.preventDefault();
+								}
 							}
-						}
-					);
+						)
+						.on('touchstart.zoom', function (e) { 
+							e.preventDefault();
+							start( e.originalEvent.touches[0] || e.originalEvent.changedTouches[0] );
+						})
+						.on('touchmove.zoom', function (e) { 
+							e.preventDefault();
+							zoom.move( e.originalEvent.touches[0] || e.originalEvent.changedTouches[0] );
+						})
+						.on('touchend.zoom', stop);
+
 				} else if (settings.on === 'click') {
 					$(source).on('click.zoom',
 						function (e) {
@@ -139,12 +150,24 @@
 							} else {
 								clicked = true;
 								start(e);
-								$(document).on(mousemove, zoom.move);
+								$(document)
+									.on(mousemove, zoom.move)
+									.on('touchstart.zoom', function (e) { 
+										// no e.preventDefault() cause it will be impossible to turn off with a click
+										start( e.originalEvent.touches[0] || e.originalEvent.changedTouches[0] );
+									})
+									.on('touchmove.zoom', function (e) { 
+										e.preventDefault();
+										zoom.move( e.originalEvent.touches[0] || e.originalEvent.changedTouches[0] );
+									});
 								$(document).one('click.zoom',
 									function () {
 										stop();
 										clicked = false;
-										$(document).off(mousemove, zoom.move);
+										$(document)
+											.off(mousemove, zoom.move)
+											.off('touchstart.zoom')
+											.off('touchmove.zoom');
 									}
 								);
 								return false;
@@ -168,7 +191,16 @@
 					$(source)
 						.on('mouseenter.zoom', start)
 						.on('mouseleave.zoom', stop)
-						.on(mousemove, zoom.move);
+						.on(mousemove, zoom.move)
+						.on('touchstart.zoom', function (e) { 
+							e.preventDefault();
+							start( e.originalEvent.touches[0] || e.originalEvent.changedTouches[0] );
+						})
+						.on('touchmove.zoom', function (e) { 
+							e.preventDefault();
+							zoom.move( e.originalEvent.touches[0] || e.originalEvent.changedTouches[0] );
+						})
+						.on('touchend.zoom', stop);
 				}
 
 				if ($.isFunction(settings.callback)) {
