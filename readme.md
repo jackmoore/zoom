@@ -4,8 +4,11 @@ A small jQuery plugin for zooming images on mouseover or mousedown. See the [pro
  
 ## Changelog:
 
+### v1.7.10 - 2013/10/16
+* Fixed bug relating to the size of the target element when using the target property (Fixes #35)
+
 ### v1.7.9 - 2013/10/16
-* Added simple fallback for touch events. Fixes #37 #39
+* Added simple fallback for touch events (Fixes #37 #39)
 * Renamed minified file to jquery.zoom.min.js to match jQuery's convention.
 
 ### v1.7.8 - 2013/7/30

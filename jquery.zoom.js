@@ -1,5 +1,5 @@
 /*!
-	Zoom v1.7.9 - 2013-10-16
+	Zoom v1.7.10 - 2013-10-16
 	Enlarge images on click or mouseover.
 	(c) 2013 Jack Moore - http://www.jacklmoore.com/zoom
 	license: http://www.opensource.org/licenses/mit-license.php
@@ -18,8 +18,10 @@
 
 	// Core Zoom Logic, independent of event listeners.
 	$.zoom = function(target, source, img) {
-		var outerWidth,
-			outerHeight,
+		var targetHeight,
+			targetWidth,
+			sourceHeight,
+			sourceWidth,
 			xRatio,
 			yRatio,
 			offset,
@@ -49,18 +51,28 @@
 
 		return {
 			init: function() {
-				outerWidth = $(target).outerWidth();
-				outerHeight = $(target).outerHeight();
-				xRatio = (img.width - outerWidth) / $(source).outerWidth();
-				yRatio = (img.height - outerHeight) / $(source).outerHeight();
+				targetWidth = $(target).outerWidth();
+				targetHeight = $(target).outerHeight();
+
+				if (source === target) {
+					sourceWidth = targetWidth;
+					sourceHeight = targetHeight;
+				} else {
+					sourceWidth = $(source).outerWidth();
+					sourceHeight = $(source).outerHeight();
+				}
+
+				xRatio = (img.width - targetWidth) / sourceWidth;
+				yRatio = (img.height - targetHeight) / sourceHeight;
+
 				offset = $(source).offset();
 			},
 			move: function (e) {
 				var left = (e.pageX - offset.left),
 					top = (e.pageY - offset.top);
 
-				top = Math.max(Math.min(top, outerHeight), 0);
-				left = Math.max(Math.min(left, outerWidth), 0);
+				top = Math.max(Math.min(top, sourceHeight), 0);
+				left = Math.max(Math.min(left, sourceWidth), 0);
 
 				img.style.left = (left * -xRatio) + 'px';
 				img.style.top = (top * -yRatio) + 'px';
