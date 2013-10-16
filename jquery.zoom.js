@@ -1,5 +1,5 @@
 /*!
-	Zoom v1.7.8 - 2013-07-30
+	Zoom v1.7.9 - 2013-10-16
 	Enlarge images on click or mouseover.
 	(c) 2013 Jack Moore - http://www.jacklmoore.com/zoom
 	license: http://www.opensource.org/licenses/mit-license.php
@@ -10,7 +10,8 @@
 		callback: false,
 		target: false,
 		duration: 120,
-		on: 'mouseover', // other options: 'grab', 'click', 'toggle'
+		on: 'mouseover', // other options: grab, click, toggle
+		touch: true, // enables a touch fallback
 		onZoomIn: false,
 		onZoomOut: false
 	};
@@ -79,6 +80,7 @@
 			$img = $(img),
 			mousemove = 'mousemove.zoom',
 			clicked = false,
+			touched = false,
 			$urlElement;
 
 			// If a url wasn't specified, look for an image element.
@@ -110,6 +112,7 @@
 					.fadeTo(settings.duration, 0, $.isFunction(settings.onZoomOut) ? settings.onZoomOut.call(img) : false);
 				}
 
+				// Mouse events
 				if (settings.on === 'grab') {
 					$(source)
 						.on('mousedown.zoom',
@@ -130,17 +133,7 @@
 									e.preventDefault();
 								}
 							}
-						)
-						.on('touchstart.zoom', function (e) { 
-							e.preventDefault();
-							start( e.originalEvent.touches[0] || e.originalEvent.changedTouches[0] );
-						})
-						.on('touchmove.zoom', function (e) { 
-							e.preventDefault();
-							zoom.move( e.originalEvent.touches[0] || e.originalEvent.changedTouches[0] );
-						})
-						.on('touchend.zoom', stop);
-
+						);
 				} else if (settings.on === 'click') {
 					$(source).on('click.zoom',
 						function (e) {
@@ -150,24 +143,12 @@
 							} else {
 								clicked = true;
 								start(e);
-								$(document)
-									.on(mousemove, zoom.move)
-									.on('touchstart.zoom', function (e) { 
-										// no e.preventDefault() cause it will be impossible to turn off with a click
-										start( e.originalEvent.touches[0] || e.originalEvent.changedTouches[0] );
-									})
-									.on('touchmove.zoom', function (e) { 
-										e.preventDefault();
-										zoom.move( e.originalEvent.touches[0] || e.originalEvent.changedTouches[0] );
-									});
+								$(document).on(mousemove, zoom.move);
 								$(document).one('click.zoom',
 									function () {
 										stop();
 										clicked = false;
-										$(document)
-											.off(mousemove, zoom.move)
-											.off('touchstart.zoom')
-											.off('touchmove.zoom');
+										$(document).off(mousemove, zoom.move);
 									}
 								);
 								return false;
@@ -185,24 +166,34 @@
 							clicked = !clicked;
 						}
 					);
-				} else {
+				} else if (settings.on === 'mouseover') {
 					zoom.init(); // Preemptively call init because IE7 will fire the mousemove handler before the hover handler.
 
 					$(source)
 						.on('mouseenter.zoom', start)
 						.on('mouseleave.zoom', stop)
-						.on(mousemove, zoom.move)
+						.on(mousemove, zoom.move);
+				}
+
+				// Touch fallback
+				if (settings.touch) {
+					$(source)
 						.on('touchstart.zoom', function (e) { 
 							e.preventDefault();
-							start( e.originalEvent.touches[0] || e.originalEvent.changedTouches[0] );
+							if (touched) {
+								touched = false;
+								stop();
+							} else {
+								touched = true;
+								start( e.originalEvent.touches[0] || e.originalEvent.changedTouches[0] );
+							}
 						})
 						.on('touchmove.zoom', function (e) { 
 							e.preventDefault();
 							zoom.move( e.originalEvent.touches[0] || e.originalEvent.changedTouches[0] );
-						})
-						.on('touchend.zoom', stop);
+						});
 				}
-
+				
 				if ($.isFunction(settings.callback)) {
 					settings.callback.call(img);
 				}
