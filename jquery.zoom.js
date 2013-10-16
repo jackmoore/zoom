@@ -51,16 +51,19 @@
 			init: function() {
 				outerWidth = $(target).outerWidth();
 				outerHeight = $(target).outerHeight();
-				xRatio = (img.width - outerWidth) / $(source).outerWidth();
-				yRatio = (img.height - outerHeight) / $(source).outerHeight();
+				sourceWidth = $(source).outerWidth();
+				sourceHeight = $(source).outerHeight();
+				xRatio = (img.width - outerWidth) / sourceHeight;
+				yRatio = (img.height - outerHeight) / sourceWidth;
 				offset = $(source).offset();
 			},
 			move: function (e) {
 				var left = (e.pageX - offset.left),
 					top = (e.pageY - offset.top);
-
-				top = Math.max(Math.min(top, outerHeight), 0);
-				left = Math.max(Math.min(left, outerWidth), 0);
+				// We should set min and max to source size. 
+				// Otherwise it will not work properly if the target window size smaller than source.
+				top = Math.max(Math.min(top, sourceHeight), 0);
+				left = Math.max(Math.min(left, sourceWidth), 0);
 
 				img.style.left = (left * -xRatio) + 'px';
 				img.style.top = (top * -yRatio) + 'px';
