@@ -4,6 +4,9 @@ A small jQuery plugin for zooming images on mouseover or mousedown. See the [pro
  
 ## Changelog:
 
+### v1.7.11 - 2013/11/12
+* Added magnify property to allow scaling of the zoomed image.
+
 ### v1.7.10 - 2013/10/16
 * Fixed bug relating to the size of the target element when using the target property (Fixes #35)
 
