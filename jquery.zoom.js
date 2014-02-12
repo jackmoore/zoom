@@ -1,7 +1,7 @@
 /*!
-	Zoom v1.7.11 - 2013-11-12
+	Zoom v1.7.12 - 2014-02-12
 	Enlarge images on click or mouseover.
-	(c) 2013 Jack Moore - http://www.jacklmoore.com/zoom
+	(c) 2014 Jack Moore - http://www.jacklmoore.com/zoom
 	license: http://www.opensource.org/licenses/mit-license.php
 */
 (function ($) {
@@ -46,7 +46,8 @@
 				width: img.width * magnify,
 				height: img.height * magnify,
 				border: 'none',
-				maxWidth: 'none'
+				maxWidth: 'none',
+				maxHeight: 'none'
 			})
 			.appendTo(target);
 
