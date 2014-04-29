@@ -1,5 +1,5 @@
 /*!
-	Zoom v1.7.12 - 2014-02-12
+	Zoom v1.7.13 - 2014-04-29
 	Enlarge images on click or mouseover.
 	(c) 2014 Jack Moore - http://www.jacklmoore.com/zoom
 	license: http://www.opensource.org/licenses/mit-license.php
@@ -26,13 +26,12 @@
 			xRatio,
 			yRatio,
 			offset,
-			position = $(target).css('position');
+			position = $(target).css('position'),
+			$source = $(source);
 
 		// The parent element needs positioning so that the zoomed element can be correctly positioned within.
-		$(target).css({
-			position: /(absolute|fixed)/.test(position) ? position : 'relative',
-			overflow: 'hidden'
-		});
+		target.style.position = /(absolute|fixed)/.test(position) ? position : 'relative';
+		target.style.overflow = 'hidden';
 
 		img.style.width = img.style.height = '';
 
@@ -60,14 +59,14 @@
 					sourceWidth = targetWidth;
 					sourceHeight = targetHeight;
 				} else {
-					sourceWidth = $(source).outerWidth();
-					sourceHeight = $(source).outerHeight();
+					sourceWidth = $source.outerWidth();
+					sourceHeight = $source.outerHeight();
 				}
 
 				xRatio = (img.width - targetWidth) / sourceWidth;
 				yRatio = (img.height - targetHeight) / sourceHeight;
 
-				offset = $(source).offset();
+				offset = $source.offset();
 			},
 			move: function (e) {
 				var left = (e.pageX - offset.left),
@@ -90,6 +89,7 @@
 			target = settings.target || this,
 			//source will provide zoom location info (thumbnail)
 			source = this,
+			$source = $(source),
 			img = document.createElement('img'),
 			$img = $(img),
 			mousemove = 'mousemove.zoom',
@@ -99,7 +99,7 @@
 
 			// If a url wasn't specified, look for an image element.
 			if (!settings.url) {
-				$urlElement = $(source).find('img');
+				$urlElement = $source.find('img');
 				if ($urlElement[0]) {
 					settings.url = $urlElement.data('src') || $urlElement.attr('src');
 				}
@@ -107,6 +107,19 @@
 					return;
 				}
 			}
+
+			(function(){
+				var position = target.style.position;
+				var overflow = target.style.overflow;
+
+				$source.one('zoom.destroy', function(){
+					$source.off(".zoom");
+					target.style.position = position;
+					target.style.overflow = overflow;
+					$img.remove();
+				});
+				
+			}());
 
 			img.onload = function () {
 				var zoom = $.zoom(target, source, img, settings.magnify);
@@ -128,7 +141,7 @@
 
 				// Mouse events
 				if (settings.on === 'grab') {
-					$(source)
+					$source
 						.on('mousedown.zoom',
 							function (e) {
 								if (e.which === 1) {
@@ -149,7 +162,7 @@
 							}
 						);
 				} else if (settings.on === 'click') {
-					$(source).on('click.zoom',
+					$source.on('click.zoom',
 						function (e) {
 							if (clicked) {
 								// bubble the event up to the document to trigger the unbind.
@@ -170,7 +183,7 @@
 						}
 					);
 				} else if (settings.on === 'toggle') {
-					$(source).on('click.zoom',
+					$source.on('click.zoom',
 						function (e) {
 							if (clicked) {
 								stop();
@@ -183,7 +196,7 @@
 				} else if (settings.on === 'mouseover') {
 					zoom.init(); // Preemptively call init because IE7 will fire the mousemove handler before the hover handler.
 
-					$(source)
+					$source
 						.on('mouseenter.zoom', start)
 						.on('mouseleave.zoom', stop)
 						.on(mousemove, zoom.move);
@@ -191,8 +204,8 @@
 
 				// Touch fallback
 				if (settings.touch) {
-					$(source)
-						.on('touchstart.zoom', function (e) { 
+					$source
+						.on('touchstart.zoom', function (e) {
 							e.preventDefault();
 							if (touched) {
 								touched = false;
@@ -202,7 +215,7 @@
 								start( e.originalEvent.touches[0] || e.originalEvent.changedTouches[0] );
 							}
 						})
-						.on('touchmove.zoom', function (e) { 
+						.on('touchmove.zoom', function (e) {
 							e.preventDefault();
 							zoom.move( e.originalEvent.touches[0] || e.originalEvent.changedTouches[0] );
 						});
@@ -214,11 +227,6 @@
 			};
 
 			img.src = settings.url;
-
-			$(source).one('zoom.destroy', function(){
-				$(source).off(".zoom").css({position: '',overflow: ''});
-				$img.remove();
-			});
 		});
 	};
 

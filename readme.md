@@ -4,6 +4,9 @@ A small jQuery plugin for zooming images on mouseover or mousedown. See the [pro
  
 ## Changelog:
 
+### v1.7.13 - 2014/4/29
+* Destroy event does a better job of reseting back to the original state.
+
 ### v1.7.12 - 2014/2/11
 * Set zoomed image's maxHeight to none, just in case a maxHeight has been defined for images in the CSS.
 
