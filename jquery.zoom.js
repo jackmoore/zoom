@@ -216,7 +216,7 @@
 			img.src = settings.url;
 
 			$(source).one('zoom.destroy', function(){
-				$(source).off(".zoom");
+				$(source).off(".zoom").css({position: '',overflow: ''});
 				$img.remove();
 			});
 		});
