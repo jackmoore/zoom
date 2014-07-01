@@ -34,6 +34,7 @@
 
 		#ex2 img:hover { cursor: url(grab.cur), default; }
 		#ex2 img:active { cursor: url(grabbed.cur), default; }
+		
 	</style>
 	<script src='http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js'></script>
 	<script src='jquery.zoom.js'></script>
@@ -42,11 +43,25 @@
 			$('#ex1').zoom();
 			$('#ex2').zoom({ on:'grab' });
 			$('#ex3').zoom({ on:'click' });			 
-			$('#ex4').zoom({ on:'toggle' });
+			$('#ex4').zoom({ on:'toggle' });		 
+			$('#ex5').zoom();
+		});
+		
+		$(document).on('click', '.switch-image', function(){
+		  var
+		    newSrc = $(this).find('img')[0].src,
+		    mainImg = $('#ex5 img')[0];
+		    if(mainImg.src !== newSrc){
+  		    mainImg.src = newSrc;
+  		    $('#ex5').zoom({ url: newSrc });
+		    }
 		});
 	</script>
 </head>
 <body>
+<h1>Zoom demo</h1>
+<section>
+  <h2>Basic examples</h2>
 	<span class='zoom' id='ex1'>
 		<img src='daisy.jpg' width='555' height='320' alt='Daisy on the Ohoopee'/>
 		<p>Hover</p>
@@ -63,5 +78,19 @@
 		<img src='roxy.jpg' width='290' height='320' alt='Roxy on the Ohoopee'/>
 		<p>Click to toggle</p>
 	</span>
+</section>
+<hr>
+<section id="image-switching">
+  <h2>Image switching</h2>
+  <span class='zoom' id='ex5'>
+		<img src='daisy.jpg' width='555' height='320' alt='Daisy on the Ohoopee'/>
+	</span>
+	<a href="#" class="switch-image">
+  	<img src='daisy.jpg' width='139' height='80' alt='Daisy on the Ohoopee'/>
+	</a>
+	<a href="#" class="switch-image">
+  	<img src='roxy.jpg' width='73' height='80' alt='Roxy on the Ohoopee'/>
+	</a>
+</section>
 </body>
 </html>
