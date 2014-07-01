@@ -29,13 +29,14 @@
 			position = $(target).css('position'),
 			$source = $(source);
 
-		// The parent element needs positioning so that the zoomed element can be correctly positioned within.
-		target.style.position = /(absolute|fixed)/.test(position) ? position : 'relative';
-		target.style.overflow = 'hidden';
+    if($(target).find('.zoomImg').length === 0){
+  		// The parent element needs positioning so that the zoomed element can be correctly positioned within.
+  		target.style.position = /(absolute|fixed)/.test(position) ? position : 'relative';
+  		target.style.overflow = 'hidden';
+  
+  		img.style.width = img.style.height = '';
 
-		img.style.width = img.style.height = '';
-
-		$(img)
+      $(img)
 			.addClass('zoomImg')
 			.css({
 				position: 'absolute',
@@ -49,6 +50,7 @@
 				maxHeight: 'none'
 			})
 			.appendTo(target);
+    }
 
 		return {
 			init: function() {
@@ -90,7 +92,7 @@
 			//source will provide zoom location info (thumbnail)
 			source = this,
 			$source = $(source),
-			img = document.createElement('img'),
+			img = $source.find('.zoomImg') || document.createElement('img'),
 			$img = $(img),
 			mousemove = 'mousemove.zoom',
 			clicked = false,
