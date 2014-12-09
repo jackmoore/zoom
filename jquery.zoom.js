@@ -13,11 +13,12 @@
 		touch: true, // enables a touch fallback
 		onZoomIn: false,
 		onZoomOut: false,
-		magnify: 1
+		magnify: 1,
+		magnifyMode: 'native' // other option: 'displayed'
 	};
 
 	// Core Zoom Logic, independent of event listeners.
-	$.zoom = function(target, source, img, magnify) {
+	$.zoom = function(target, source, img, magnify, magnifyMode) {
 		var targetHeight,
 			targetWidth,
 			sourceHeight,
@@ -34,25 +35,34 @@
 
 		img.style.width = img.style.height = '';
 
-		$(img)
-			.addClass('zoomImg')
-			.css({
-				position: 'absolute',
-				top: 0,
-				left: 0,
-				opacity: 0,
-				width: img.width * magnify,
-				height: img.height * magnify,
-				border: 'none',
-				maxWidth: 'none',
-				maxHeight: 'none'
-			})
-			.appendTo(target);
+
+		var css = {
+			position: 'absolute',
+			top: 0,
+			left: 0,
+			opacity: 0,
+			border: 'none',
+			maxWidth: 'none',
+			maxHeight: 'none'
+		};
+		if (magnifyMode == 'native') {
+			css.width = img.width * magnify;
+			css.height = img.height * magnify;
+		}
+
+		$(img).addClass('zoomImg').css(css).appendTo(target);
 
 		return {
 			init: function() {
 				targetWidth = $(target).outerWidth();
 				targetHeight = $(target).outerHeight();
+
+				if (magnifyMode == 'displayed') {
+					$(img).css({
+					  width: targetWidth * magnify,
+					  height: targetHeight * magnify,
+					});
+				}
 
 				if (source === target) {
 					sourceWidth = targetWidth;
@@ -121,7 +131,7 @@
 			}());
 
 			img.onload = function () {
-				var zoom = $.zoom(target, source, img, settings.magnify);
+				var zoom = $.zoom(target, source, img, settings.magnify, settings.magnifyMode);
 
 				function start(e) {
 					zoom.init();
