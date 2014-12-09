@@ -9,7 +9,8 @@
 		"zoom",
 		"images",
 		"ui",
-		"jQuery"
+		"jQuery",
+		"jquery-plugin"
 	],
 	"authors": [
 		{
