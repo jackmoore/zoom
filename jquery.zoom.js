@@ -116,6 +116,7 @@
 					target.style.position = position;
 					target.style.overflow = overflow;
 					$img.remove();
+					img.onload = null;
 				});
 				
 			}());
