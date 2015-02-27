@@ -6,7 +6,6 @@
 		"zoom",
 		"images",
 		"ui",
-		"jQuery",
 		"jquery-plugin"
 	],
 	"author": {
@@ -14,6 +13,7 @@
 		"url": "http://www.jacklmoore.com",
 		"email": "hello@jacklmoore.com"
 	},
+	"main": "jquery.zoom.js",
 	"license": "MIT",
 	"homepage": "http://www.jacklmoore.com/zoom",
 	"demo": "http://www.jacklmoore.com/zoom",
