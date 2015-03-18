@@ -25,12 +25,13 @@
 			xRatio,
 			yRatio,
 			offset,
-			position = $(target).css('position'),
+			$target = $(target),
+			position = $target.css('position'),
 			$source = $(source);
 
 		// The parent element needs positioning so that the zoomed element can be correctly positioned within.
-		target.style.position = /(absolute|fixed)/.test(position) ? position : 'relative';
-		target.style.overflow = 'hidden';
+		$target.css('position', /(absolute|fixed)/.test(position) ? position : 'relative');
+		$target.css('overflow', 'hidden');
 
 		img.style.width = img.style.height = '';
 
@@ -51,8 +52,8 @@
 
 		return {
 			init: function() {
-				targetWidth = $(target).outerWidth();
-				targetHeight = $(target).outerHeight();
+				targetWidth = $target.outerWidth();
+				targetHeight = $target.outerHeight();
 
 				if (source === target) {
 					sourceWidth = targetWidth;
@@ -89,6 +90,7 @@
 			//source will provide zoom location info (thumbnail)
 			source = this,
 			$source = $(source),
+			$target = $(target),
 			img = document.createElement('img'),
 			$img = $(img),
 			mousemove = 'mousemove.zoom',
@@ -108,13 +110,13 @@
 			}
 
 			(function(){
-				var position = target.style.position;
-				var overflow = target.style.overflow;
+				var position = $target.css('position');
+				var overflow = $target.css('overflow');
 
 				$source.one('zoom.destroy', function(){
 					$source.off(".zoom");
-					target.style.position = position;
-					target.style.overflow = overflow;
+					$target.css('position', position);
+					$target.css('overflow', overflow);
 					$img.remove();
 				});
 				
