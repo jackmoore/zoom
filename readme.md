@@ -4,6 +4,9 @@ A small jQuery plugin for zooming images on mouseover or mousedown. See the [pro
  
 ## Changelog:
 
+##### v1.7.14 - 2015/3/18
+* Fixes bug with passing the `target` property a selector, rather than a DOM node. Merges #73.
+
 ##### v1.7.13 - 2014/4/29
 * Destroy event does a better job of reseting back to the original state.
 

@@ -1,5 +1,5 @@
 /*!
-	Zoom 1.7.13
+	Zoom 1.7.14
 	license: MIT
 	http://www.jacklmoore.com/zoom
 */
@@ -55,7 +55,7 @@
 				targetWidth = $target.outerWidth();
 				targetHeight = $target.outerHeight();
 
-				if (source === target) {
+				if (source === $target[0]) {
 					sourceWidth = targetWidth;
 					sourceHeight = targetHeight;
 				} else {
