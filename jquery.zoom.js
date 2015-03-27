@@ -208,12 +208,20 @@
 					$source
 						.on('touchstart.zoom', function (e) {
 							e.preventDefault();
-							if (touched) {
-								touched = false;
-								stop();
-							} else {
-								touched = true;
+							if(settings.on=="grab") {			
 								start( e.originalEvent.touches[0] || e.originalEvent.changedTouches[0] );
+								$(document).one('touchend.zoom',function(e) {
+									e.preventDefault()
+									stop()
+								})
+							} else {
+								if (touched) {
+									touched = false;
+									stop();
+								} else {
+									touched = true;
+									start( e.originalEvent.touches[0] || e.originalEvent.changedTouches[0] );
+								}								
 							}
 						})
 						.on('touchmove.zoom', function (e) {
