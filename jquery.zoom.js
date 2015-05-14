@@ -198,7 +198,7 @@
 					zoom.init(); // Preemptively call init because IE7 will fire the mousemove handler before the hover handler.
 
 					$source
-						.on('mouseenter.zoom', start)
+						.on('mouseover.zoom', start)
 						.on('mouseleave.zoom', stop)
 						.on(mousemove, zoom.move);
 				}
