@@ -1,5 +1,5 @@
 /*!
-	Zoom 1.7.14
+	Zoom 1.7.15
 	license: MIT
 	http://www.jacklmoore.com/zoom
 */
@@ -109,30 +109,16 @@
 				}
 			}
 
-			(function(){
-				var position = $target.css('position');
-				var overflow = $target.css('overflow');
-
-				$source.one('zoom.destroy', function(){
-					$source.off(".zoom");
-					$target.css('position', position);
-					$target.css('overflow', overflow);
-					$img.remove();
-				});
-				
-			}());
-
 			img.onload = function () {
 				var zoom = $.zoom(target, source, img, settings.magnify);
-
 				function start(e) {
-					zoom.init();
-					zoom.move(e);
+                    zoom.init();
+                    zoom.move(e);
 
-					// Skip the fade-in for IE8 and lower since it chokes on fading-in
-					// and changing position based on mousemovement at the same time.
-					$img.stop()
-					.fadeTo($.support.opacity ? settings.duration : 0, 1, $.isFunction(settings.onZoomIn) ? settings.onZoomIn.call(img) : false);
+                    // Skip the fade-in for IE8 and lower since it chokes on fading-in
+                    // and changing position based on mousemovement at the same time.
+                    $img.stop()
+                    .fadeTo($.support.opacity ? settings.duration : 0, 1, $.isFunction(settings.onZoomIn) ? settings.onZoomIn.call(img) : false);
 				}
 
 				function stop() {
@@ -226,6 +212,22 @@
 					settings.callback.call(img);
 				}
 			};
+            //handle 'zoom.destroy' to revert $source and destroy the zoom plugin
+            (function(){
+				var position = $target.css('position');
+				var overflow = $target.css('overflow');
+				$source.one('zoom.destroy', function(){
+					$source.off(".zoom");
+					$target.css('position', position);
+					$target.css('overflow', overflow);
+                    // $img.remove, doesn't unset the onload handler,
+                    // so we have to clear it manually to avoid the 
+                    // onload trap
+                    img.onload = function(){}; 
+					$img.remove();
+				});
+				
+			}());
 
 			img.src = settings.url;
 		});
