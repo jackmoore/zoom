@@ -207,6 +207,7 @@
 				if (settings.touch) {
 					$source
 						.on('touchstart.zoom', function (e) {
+							if (settings.on === "click" || settings.on === "toggle") return;
 							e.preventDefault();
 							if (touched) {
 								touched = false;
@@ -217,11 +218,12 @@
 							}
 						})
 						.on('touchmove.zoom', function (e) {
+							if (!touched && !clicked) return;
 							e.preventDefault();
 							zoom.move( e.originalEvent.touches[0] || e.originalEvent.changedTouches[0] );
 						});
 				}
-				
+
 				if ($.isFunction(settings.callback)) {
 					settings.callback.call(img);
 				}
