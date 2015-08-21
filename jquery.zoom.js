@@ -4,6 +4,9 @@
 	http://www.jacklmoore.com/zoom
 */
 (function ($) {
+	
+	'use strict';
+	
 	var defaults = {
 		url: false,
 		callback: false,
@@ -232,4 +235,4 @@
 	};
 
 	$.fn.zoom.defaults = defaults;
-}(window.jQuery));
+}(window.jQuery);
