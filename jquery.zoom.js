@@ -3,7 +3,7 @@
 	license: MIT
 	http://www.jacklmoore.com/zoom
 */
-(function ($) {
++function ($) {
 	
 	'use strict';
 	
