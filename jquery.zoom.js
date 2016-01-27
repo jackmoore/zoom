@@ -1,5 +1,5 @@
 /*!
-	Zoom 1.7.14
+	Zoom 1.7.15
 	license: MIT
 	http://www.jacklmoore.com/zoom
 */
@@ -13,11 +13,12 @@
 		touch: true, // enables a touch fallback
 		onZoomIn: false,
 		onZoomOut: false,
-		magnify: 1
+		magnify: 1,
+		deadZone: 0
 	};
 
 	// Core Zoom Logic, independent of event listeners.
-	$.zoom = function(target, source, img, magnify) {
+	$.zoom = function(target, source, img, magnify, settings) {
 		var targetHeight,
 			targetWidth,
 			sourceHeight,
@@ -72,6 +73,18 @@
 				var left = (e.pageX - offset.left),
 					top = (e.pageY - offset.top);
 
+				if(settings.deadZone > 0){
+					var centerLeft = sourceWidth / 2;
+					var centerTop = sourceHeight / 2;
+					if(left < centerLeft || left > centerLeft){
+						left = left - settings.deadZone * (((centerLeft - left) * 100 / centerLeft) / 100);
+
+						if(top < centerTop || top > centerTop){
+							top = top - settings.deadZone * (((centerTop - top) * 100 / centerTop) / 100);
+						}
+					}
+				}
+
 				top = Math.max(Math.min(top, sourceHeight), 0);
 				left = Math.max(Math.min(left, sourceWidth), 0);
 
@@ -123,7 +136,7 @@
 			}());
 
 			img.onload = function () {
-				var zoom = $.zoom(target, source, img, settings.magnify);
+				var zoom = $.zoom(target, source, img, settings.magnify, settings);
 
 				function start(e) {
 					zoom.init();
