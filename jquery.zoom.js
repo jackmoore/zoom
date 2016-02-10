@@ -118,6 +118,7 @@
 					$target.css('position', position);
 					$target.css('overflow', overflow);
 					$img.remove();
+					img.onload = null;
 				});
 				
 			}());
