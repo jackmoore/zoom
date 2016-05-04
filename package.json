@@ -1,27 +1,38 @@
 {
-	"name": "jquery-zoom",
-	"description": "Enlarge images on click or mouseover.",
-	"version": "1.7.15",
-	"keywords": [
-		"zoom",
-		"images",
-		"ui",
-		"jquery-plugin"
-	],
-	"author": {
-		"name": "Jack Moore",
-		"url": "http://www.jacklmoore.com",
-		"email": "hello@jacklmoore.com"
-	},
-	"main": "jquery.zoom.js",
-	"license": "MIT",
-	"homepage": "http://www.jacklmoore.com/zoom",
-	"demo": "http://www.jacklmoore.com/zoom",
-	"repository": {
-		"type": "git",
-		"url": "http://github.com/jackmoore/zoom.git"
-	},
-	"dependencies": {
-		"jquery": ">=1.7"
-	}
+  "name": "jquery-zoom",
+  "description": "Enlarge images on click or mouseover.",
+  "version": "1.7.16",
+  "keywords": [
+    "zoom",
+    "images",
+    "ui",
+    "jquery-plugin"
+  ],
+  "author": {
+    "name": "Jack Moore",
+    "url": "http://www.jacklmoore.com",
+    "email": "hello@jacklmoore.com"
+  },
+  "main": "dist/jquery.zoom.js",
+  "license": "MIT",
+  "homepage": "http://www.jacklmoore.com/zoom",
+  "demo": "http://www.jacklmoore.com/zoom",
+  "repository": {
+    "type": "git",
+    "url": "http://github.com/jackmoore/zoom.git"
+  },
+  "dependencies": {
+    "jquery": ">=1.7"
+  },
+  "devDependencies": {
+    "del": "^2.2.0",
+    "eslint": "^2.9.0",
+    "gulp": "^3.9.1",
+    "gulp-eslint": "^2.0.0",
+    "gulp-rename": "^1.2.2",
+    "gulp-replace-task": "^0.11.0",
+    "gulp-sourcemaps": "^2.0.0-alpha",
+    "gulp-uglify": "^1.5.3",
+    "gulp-umd": "^0.2.0"
+  }
 }

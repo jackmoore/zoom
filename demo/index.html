@@ -13,14 +13,14 @@
 			display:inline-block;
 			position: relative;
 		}
-		
+
 		/* magnifying glass icon */
 		.zoom:after {
 			content:'';
-			display:block; 
-			width:33px; 
-			height:33px; 
-			position:absolute; 
+			display:block;
+			width:33px;
+			height:33px;
+			position:absolute;
 			top:0;
 			right:0;
 			background:url(icon.png);
@@ -36,12 +36,12 @@
 		#ex2 img:active { cursor: url(grabbed.cur), default; }
 	</style>
 	<script src='http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js'></script>
-	<script src='jquery.zoom.js'></script>
+	<script src='../dist/jquery.zoom.js'></script>
 	<script>
 		$(document).ready(function(){
 			$('#ex1').zoom();
 			$('#ex2').zoom({ on:'grab' });
-			$('#ex3').zoom({ on:'click' });			 
+			$('#ex3').zoom({ on:'click' });
 			$('#ex4').zoom({ on:'toggle' });
 		});
 	</script>

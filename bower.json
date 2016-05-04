@@ -25,5 +25,5 @@
 		}
 	],
 	"homepage": "http://www.jacklmoore.com/zoom",
-	"main": "jquery.zoom.js"
+	"main": "dist/jquery.zoom.js"
 }

@@ -1,8 +1,17 @@
+;(function(root, factory) {
+  if (typeof define === 'function' && define.amd) {
+    define(['jquery'], factory);
+  } else if (typeof exports === 'object') {
+    module.exports = factory(require('jquery'));
+  } else {
+    root.$.zoom = factory(root.jQuery);
+  }
+}(this, function($) {
 /*!
   Zoom
-  @version @@version
-  @license @@license
-  @homepage @@homepage
+  @version 1.7.16
+  @license MIT
+  @homepage http://www.jacklmoore.com/zoom
 */
 var defaults = {
   url: false,
@@ -238,3 +247,6 @@ $.fn.zoom = function (options) {
 };
 
 $.fn.zoom.defaults = defaults;
+
+return $.zoom;
+}));
