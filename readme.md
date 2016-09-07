@@ -6,6 +6,9 @@ To compile the .min.js file, run: `uglifyjs --comments '/license:/' < jquery.zoo
 
 ## Changelog:
 
+##### v1.7.16 - 2016/9/7
+* Cancelled the onload event when calling destroy.  Fixes #83
+
 ##### v1.7.15 - 2016/2/8
 * Added touchend event, might fix #97 #75 #62.  Merges #100.
 

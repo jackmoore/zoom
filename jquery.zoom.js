@@ -1,5 +1,5 @@
 /*!
-	Zoom 1.7.15
+	Zoom 1.7.16
 	license: MIT
 	http://www.jacklmoore.com/zoom
 */
@@ -109,18 +109,13 @@
 				}
 			}
 
-			(function(){
-				var position = $target.css('position');
-				var overflow = $target.css('overflow');
-
-				$source.one('zoom.destroy', function(){
-					$source.off(".zoom");
-					$target.css('position', position);
-					$target.css('overflow', overflow);
-					$img.remove();
-				});
-				
-			}());
+			$source.one('zoom.destroy', function(position, overflow){
+				$source.off(".zoom");
+				target.style.position = position;
+				target.style.overflow = overflow;
+				img.onload = null;
+				$img.remove();
+			}.bind(this, target.style.position, target.style.overflow));
 
 			img.onload = function () {
 				var zoom = $.zoom(target, source, img, settings.magnify);
