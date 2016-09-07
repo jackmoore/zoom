@@ -6,6 +6,9 @@ To compile the .min.js file, run: `uglifyjs --comments '/license:/' < jquery.zoo
 
 ## Changelog:
 
+##### v1.7.17 - 2016/9/7
+* Detect src using element.currentSrc to support srcset. Fixes #82
+
 ##### v1.7.16 - 2016/9/7
 * Cancelled the onload event when calling destroy.  Fixes #83
 
