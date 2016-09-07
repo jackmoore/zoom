@@ -1,5 +1,5 @@
 /*!
-	Zoom 1.7.16
+	Zoom 1.7.17
 	license: MIT
 	http://www.jacklmoore.com/zoom
 */
@@ -95,14 +95,13 @@
 			$img = $(img),
 			mousemove = 'mousemove.zoom',
 			clicked = false,
-			touched = false,
-			$urlElement;
+			touched = false;
 
 			// If a url wasn't specified, look for an image element.
 			if (!settings.url) {
-				$urlElement = $source.find('img');
-				if ($urlElement[0]) {
-					settings.url = $urlElement.data('src') || $urlElement.attr('src');
+				var srcElement = source.querySelector('img');
+				if (srcElement) {
+					settings.url = srcElement.getAttribute('data-src') || srcElement.currentSrc || srcElement.src;
 				}
 				if (!settings.url) {
 					return;
