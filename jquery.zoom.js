@@ -110,11 +110,11 @@
 
 			$source.one('zoom.destroy', function(position, overflow){
 				$source.off(".zoom");
-				target.style.position = position;
-				target.style.overflow = overflow;
+				$(target).css('position', position);
+				$(target).css('overflow',  overflow);
 				img.onload = null;
 				$img.remove();
-			}.bind(this, target.style.position, target.style.overflow));
+			}.bind(this, $(target).css('position'), $(target).css('overflow') ));
 
 			img.onload = function () {
 				var zoom = $.zoom(target, source, img, settings.magnify);
@@ -222,7 +222,7 @@
 							}
 						});
 				}
-				
+
 				if ($.isFunction(settings.callback)) {
 					settings.callback.call(img);
 				}
