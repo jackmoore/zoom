@@ -1,5 +1,5 @@
 /*!
-	Zoom 1.7.17
+	Zoom 1.7.18
 	license: MIT
 	http://www.jacklmoore.com/zoom
 */
@@ -30,9 +30,8 @@
 			$source = $(source);
 
 		// The parent element needs positioning so that the zoomed element can be correctly positioned within.
-		$target.css('position', /(absolute|fixed)/.test(position) ? position : 'relative');
-		$target.css('overflow', 'hidden');
-
+		target.style.position = /(absolute|fixed)/.test(position) ? position : 'relative';
+		target.style.overflow = 'hidden';
 		img.style.width = img.style.height = '';
 
 		$(img)
@@ -55,7 +54,7 @@
 				targetWidth = $target.outerWidth();
 				targetHeight = $target.outerHeight();
 
-				if (source === $target[0]) {
+				if (source === target) {
 					sourceWidth = targetWidth;
 					sourceHeight = targetHeight;
 				} else {
@@ -86,11 +85,10 @@
 			var
 			settings = $.extend({}, defaults, options || {}),
 			//target will display the zoomed image
-			target = settings.target || this,
+			target = settings.target && $(settings.target)[0] || this,
 			//source will provide zoom location info (thumbnail)
 			source = this,
 			$source = $(source),
-			$target = $(target),
 			img = document.createElement('img'),
 			$img = $(img),
 			mousemove = 'mousemove.zoom',

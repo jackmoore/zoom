@@ -6,6 +6,9 @@ To compile the .min.js file, run: `uglifyjs --comments '/license:/' < jquery.zoo
 
 ## Changelog:
 
+##### v1.7.18 - 2016/9/9
+* Fixed regression from 1.7.16 that occurred when the target option was passed a selector. Fixes #113
+
 ##### v1.7.17 - 2016/9/7
 * Detect src using element.currentSrc to support srcset. Fixes #82
 
