@@ -129,7 +129,7 @@
 
 				function stop() {
 					$img.stop()
-					.fadeTo(settings.duration, 0, $.isFunction(settings.onZoomOut) ? settings.onZoomOut.call(img) : false);
+					.fadeOut(settings.duration, 0, $.isFunction(settings.onZoomOut) ? settings.onZoomOut.call(img) : false);
 				}
 
 				// Mouse events
@@ -220,7 +220,7 @@
 							}
 						});
 				}
-				
+
 				if ($.isFunction(settings.callback)) {
 					settings.callback.call(img);
 				}
