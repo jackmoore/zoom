@@ -180,8 +180,10 @@
 						function (e) {
 							if (clicked) {
 								stop();
+								$(document).off(mousemove, zoom.move);
 							} else {
 								start(e);
+								$(document).on(mousemove, zoom.move);
 							}
 							clicked = !clicked;
 						}
@@ -220,7 +222,7 @@
 							}
 						});
 				}
-				
+
 				if ($.isFunction(settings.callback)) {
 					settings.callback.call(img);
 				}
