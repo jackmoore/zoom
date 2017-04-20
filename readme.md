@@ -6,6 +6,9 @@ To compile the .min.js file, run: `uglifyjs --comments '/license:/' < jquery.zoo
 
 ## Changelog:
 
+##### v1.7.19 - 2017/4/20
+* Added alt and aria-hidden attributes to the zoom layer img element. Merged #121
+
 ##### v1.7.18 - 2016/9/9
 * Fixed regression from 1.7.16 that occurred when the target option was passed a selector. Fixes #113
 
