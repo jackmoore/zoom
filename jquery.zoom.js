@@ -227,6 +227,7 @@
 			};
 
 			img.src = settings.url;
+			img.alt = '';
 		});
 	};
 
