@@ -95,6 +95,13 @@
 			clicked = false,
 			touched = false;
 
+			if (options == "destroy") {
+				stop();
+				// Remove all of the namespaced events.
+				$(source).off(".zoom");
+				return;
+			}
+
 			// If a url wasn't specified, look for an image element.
 			if (!settings.url) {
 				var srcElement = source.querySelector('img');
@@ -123,11 +130,13 @@
 
 					// Skip the fade-in for IE8 and lower since it chokes on fading-in
 					// and changing position based on mousemovement at the same time.
+					$(source).trigger("zoomedIn");
 					$img.stop()
 					.fadeTo($.support.opacity ? settings.duration : 0, 1, $.isFunction(settings.onZoomIn) ? settings.onZoomIn.call(img) : false);
 				}
 
 				function stop() {
+					$(source).trigger("zoomedOut");
 					$img.stop()
 					.fadeTo(settings.duration, 0, $.isFunction(settings.onZoomOut) ? settings.onZoomOut.call(img) : false);
 				}
