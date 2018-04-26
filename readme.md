@@ -6,6 +6,9 @@ To compile the .min.js file, run: `uglifyjs --comments '/license:/' < jquery.zoo
 
 ## Changelog:
 
+##### v1.7.21 - 2018/4/26
+* Added empty alt attribute. Resolves #134
+
 ##### v1.7.20 - 2017/4/25
 * Replaced alt and aria-hidden with role attribute. Resolves #121
 
