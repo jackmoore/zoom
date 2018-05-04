@@ -45,7 +45,8 @@
 				height: img.height * magnify,
 				border: 'none',
 				maxWidth: 'none',
-				maxHeight: 'none'
+				maxHeight: 'none',
+				transform: 'translate3d(0,0,0)'
 			})
 			.appendTo(target);
 
