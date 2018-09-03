@@ -13,12 +13,13 @@
 		touch: true, // enables a touch fallback
 		onZoomIn: false,
 		onZoomOut: false,
-		magnify: 1
+		magnify: 1,
+		tolerance: 0
 	};
 
 	// Core Zoom Logic, independent of event listeners.
-	$.zoom = function(target, source, img, magnify) {
-		var targetHeight,
+	$.zoom = function (target, source, img, magnify, tolerance) {
+	    var targetHeight,
 			targetWidth,
 			sourceHeight,
 			sourceWidth,
@@ -62,8 +63,8 @@
 					sourceHeight = $source.outerHeight();
 				}
 
-				xRatio = (img.width - targetWidth) / sourceWidth;
-				yRatio = (img.height - targetHeight) / sourceHeight;
+				xRatio = (img.width - targetWidth) / (sourceWidth - 2 * tolerance);
+				yRatio = (img.height - targetHeight) / (sourceHeight - 2 * tolerance);
 
 				offset = $source.offset();
 			},
@@ -71,11 +72,11 @@
 				var left = (e.pageX - offset.left),
 					top = (e.pageY - offset.top);
 
-				top = Math.max(Math.min(top, sourceHeight), 0);
-				left = Math.max(Math.min(left, sourceWidth), 0);
+				top = Math.max(Math.min(top, sourceHeight - tolerance), 0);
+				left = Math.max(Math.min(left, sourceWidth - tolerance), 0);
 
-				img.style.left = (left * -xRatio) + 'px';
-				img.style.top = (top * -yRatio) + 'px';
+				img.style.left = -Math.max((left - tolerance) * xRatio, 0) + 'px';
+				img.style.top = -Math.max((top - tolerance) * yRatio, 0) + 'px';
 			}
 		};
 	};
@@ -115,7 +116,7 @@
 			}.bind(this, target.style.position, target.style.overflow));
 
 			img.onload = function () {
-				var zoom = $.zoom(target, source, img, settings.magnify);
+			    var zoom = $.zoom(target, source, img, settings.magnify, settings.tolerance);
 
 				function start(e) {
 					zoom.init();
