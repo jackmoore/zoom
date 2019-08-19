@@ -13,7 +13,8 @@
 		touch: true, // enables a touch fallback
 		onZoomIn: false,
 		onZoomOut: false,
-		magnify: 1
+		magnify: 1,
+		keyboardControls: true, //enables keyboard arrow key controls for accessibility
 	};
 
 	// Core Zoom Logic, independent of event listeners.
@@ -219,6 +220,33 @@
 								stop();
 							}
 						});
+				}
+				
+        // Keyboard arrow key events
+				if(settings.keyboardControls) {
+					$(document).on('keydown', function(e) {
+						var moveThresohld = $img.width()/10; //Setting the threshold of movement to one tenth the image width as a standard
+						switch (e.which) {
+							case 37: //Keycode of left arrow key
+							$img.css('left', Math.min($img[0].offsetLeft+moveThresohld, 0)); //Moves the image to left and limits it not to exceed the image width
+							break;
+
+							case 38: //Keycode of top arrow key
+							$img.css('top', Math.min($img[0].offsetTop+moveThresohld, 0));
+							break;
+
+							case 39: //Keycode of right arrow key
+							$img.css('left', Math.max($img[0].offsetLeft-moveThresohld, $source.width() - $img.width()));
+							break;
+
+							case 40: //Keycode of bottom arrow key
+							$img.css('top', Math.max($img[0].offsetTop-moveThresohld, $source.height() - $img.height()));
+							break;
+
+							default: return;
+						}
+					e.preventDefault();
+					});
 				}
 				
 				if ($.isFunction(settings.callback)) {
