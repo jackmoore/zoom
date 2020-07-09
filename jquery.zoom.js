@@ -228,8 +228,17 @@
 							}
 						});
 				}
-				
-        // Keyboard arrow key events
+
+				//Start and stop the zoom when the $source element is focused with Tabs
+				$source.on('focus', function (e) {
+					start(e);
+				});
+
+				$source.on('blur', function (e) {
+					stop();
+				});
+
+        			// Keyboard arrow key events
 				function initKeyboardEvents(){
 					$(document).on('keydown', function(e) {
 						var moveThresohld = $img.width()/10; //Setting the threshold of movement to one tenth the image width as a standard
