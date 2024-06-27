@@ -82,7 +82,7 @@
 
 	$.fn.zoom = function (options) {
 		return this.each(function () {
-			var
+			let
 			settings = $.extend({}, defaults, options || {}),
 			//target will display the zoomed image
 			target = settings.target && $(settings.target)[0] || this,
@@ -95,9 +95,10 @@
 			clicked = false,
 			touched = false;
 
+			const srcElement = source.querySelector('img');
+
 			// If a url wasn't specified, look for an image element.
 			if (!settings.url) {
-				var srcElement = source.querySelector('img');
 				if (srcElement) {
 					settings.url = srcElement.getAttribute('data-src') || srcElement.currentSrc || srcElement.src;
 				}
@@ -115,7 +116,7 @@
 			}.bind(this, target.style.position, target.style.overflow));
 
 			img.onload = function () {
-				var zoom = $.zoom(target, source, img, settings.magnify);
+				let zoom = $.zoom(target, source, img, settings.magnify);
 
 				function start(e) {
 					zoom.init();
@@ -125,11 +126,22 @@
 					// and changing position based on mousemovement at the same time.
 					$img.stop()
 					.fadeTo($.support.opacity ? settings.duration : 0, 1, $.isFunction(settings.onZoomIn) ? settings.onZoomIn.call(img) : false);
+
+					
+					//opacity background image
+					if (srcElement) {
+						$(srcElement).css('opacity', '0.2');
+					}
 				}
 
 				function stop() {
 					$img.stop()
 					.fadeTo(settings.duration, 0, $.isFunction(settings.onZoomOut) ? settings.onZoomOut.call(img) : false);
+
+					//opacity background image
+					if (srcElement) {
+						$(srcElement).css('opacity', '1');
+					}
 				}
 
 				// Mouse events
@@ -197,16 +209,31 @@
 
 				// Touch fallback
 				if (settings.touch) {
+					let touchStart = new Date().getTime();
+					let firstTouch = false;
 					$source
 						.on('touchstart.zoom', function (e) {
 							e.preventDefault();
-							if (touched) {
-								touched = false;
-								stop();
-							} else {
-								touched = true;
-								start( e.originalEvent.touches[0] || e.originalEvent.changedTouches[0] );
+
+							if(settings.on === 'click') {
+								firstTouch = false;
+								touchStart = new Date().getTime();
+								if (!touched) {
+									firstTouch = true;
+									touched = true;
+									start( e.originalEvent.touches[0] || e.originalEvent.changedTouches[0] );
+								}
 							}
+							else {								
+								if (touched) {
+									touched = false;
+									stop();
+								} else {
+									touched = true;
+									start( e.originalEvent.touches[0] || e.originalEvent.changedTouches[0] );
+								}
+							}
+							
 						})
 						.on('touchmove.zoom', function (e) {
 							e.preventDefault();
@@ -214,7 +241,14 @@
 						})
 						.on('touchend.zoom', function (e) {
 							e.preventDefault();
-							if (touched) {
+
+							if(settings.on === 'click') {
+								if(touched && !firstTouch && new Date().getTime()-touchStart < 100) {
+									touched = false
+									stop();
+								}	
+							}
+							else if (touched) {
 								touched = false;
 								stop();
 							}
