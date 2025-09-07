@@ -1,5 +1,5 @@
 /*!
-	Zoom 1.7.21
+	Zoom 1.7.22
 	license: MIT
 	http://www.jacklmoore.com/zoom
 */
